@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aguinara Imóveis - Imóveis na Serra Gaúcha</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#172B3C',
+                            900: '#0F1D2A',
+                            950: '#0A131C'
+                        },
+                        gold: {
+                            200: '#FFF2C2',
+                            300: '#F7E298',
+                            400: '#E6C25B',
+                            500: '#C59E3F',
+                            600: '#9E7A26',
+                            700: '#755716'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                        serifHeader: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gold-gradient {
+            background: linear-gradient(135deg, #F9E7A9 0%, #D8AF48 45%, #9E7A26 100%);
+        }
+        .gold-text {
+            background: linear-gradient(135deg, #FFF5CC 0%, #E6C25B 40%, #C59E3F 70%, #8A671B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background: linear-gradient(to right, rgba(15, 29, 42, 0.94), rgba(15, 29, 42, 0.81)), 
+                        url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .logo-shadow {
+            filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.7));
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-gold-500 selection:text-white">
+
+    <script>
+        // LOGO COMPLETO E EXATO EM SVG DE ALTA DEFINIÇÃO
+        const AGUINARA_EXACT_LOGO_SVG = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" class="w-full h-full logo-shadow">
+            <defs>
+                <linearGradient id="goldLight" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FFE89C" />
+                    <stop offset="35%" stop-color="#E8C265" />
+                    <stop offset="70%" stop-color="#BA9135" />
+                    <stop offset="100%" stop-color="#805F1B" />
+                </linearGradient>
+                
+                <linearGradient id="goldDark" x1="100%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#F2D685" />
+                    <stop offset="50%" stop-color="#B88E32" />
+                    <stop offset="100%" stop-color="#6E5013" />
+                </linearGradient>
+
+                <linearGradient id="goldReflect" x1="0%" y1="50%" x2="100%" y2="50%">
+                    <stop offset="0%" stop-color="#9E792B" />
+                    <stop offset="30%" stop-color="#FCEAB3" />
+                    <stop offset="60%" stop-color="#CFA142" />
+                    <stop offset="100%" stop-color="#7A5A14" />
+                </linearGradient>
+
+                <filter id="bevelShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="2" dy="5" stdDeviation="3" flood-color="#000000" flood-opacity="0.9" />
+                    <feDropShadow dx="-1" dy="-1" stdDeviation="1" flood-color="#FFF0B8" flood-opacity="0.3" />
+                </filter>
+            </defs>
+
+            <rect width="500" height="500" rx="24" fill="#0E1012" />
+            
+            <g filter="url(#bevelShadow)">
+                <path d="M 260 36 L 160 260 L 205 260 L 260 120 Z" fill="url(#goldLight)" />
+                <path d="M 260 36 L 110 260 L 160 260 L 260 85 Z" fill="url(#goldDark)" />
+                <path d="M 260 36 L 360 260 L 315 260 L 260 120 Z" fill="url(#goldDark)" />
+                <path d="M 260 36 L 410 260 L 360 260 L 260 85 Z" fill="url(#goldLight)" />
+                <path d="M 115 260 C 200 170 340 135 440 162 C 340 148 200 185 155 260 Z" fill="url(#goldReflect)" />
+                <polygon points="260,105 220,185 300,185" fill="url(#goldLight)" />
+                <polygon points="260,120 230,180 290,180" fill="#0E1012" />
+                <rect x="232" y="206" width="16" height="16" rx="2" fill="url(#goldLight)" />
+                <rect x="252" y="206" width="16" height="16" rx="2" fill="url(#goldLight)" />
+                <rect x="232" y="226" width="16" height="16" rx="2" fill="url(#goldLight)" />
+                <rect x="252" y="226" width="16" height="16" rx="2" fill="url(#goldLight)" />
+            </g>
+
+            <text x="250" y="390" text-anchor="middle" font-family="'Cinzel', 'Montserrat', serif" font-weight="700" font-size="78" fill="url(#goldReflect)" filter="url(#bevelShadow)" letter-spacing="1">Aguinara</text>
+
+            <g filter="url(#bevelShadow)">
+                <line x1="28" y1="428" x2="115" y2="428" stroke="url(#goldLight)" stroke-width="5" stroke-linecap="round" />
+                <text x="250" y="442" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="38" fill="url(#goldLight)" letter-spacing="12">IMÓVEIS</text>
+                <line x1="385" y1="428" x2="472" y2="428" stroke="url(#goldLight)" stroke-width="5" stroke-linecap="round" />
+            </g>
+        </svg>`;
+    </script>
+
+    <!-- HEADER / NAVEGAÇÃO PRINCIPAL -->
+    <header class="bg-navy-900 text-white sticky top-0 z-40 border-b border-navy-800 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-28">
+                
+                <a href="#inicio" class="shrink-0 flex items-center gap-3" aria-label="Aguinara Imóveis — Início">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 transition-transform duration-300 hover:scale-105" id="header-logo-container"></div>
+                </a>
+
+                <!-- DESKTOP MENU -->
+                <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#inicio" class="hover:text-gold-400 transition-colors py-1">Início</a>
+                    <a href="#imoveis" onclick="setSearchPurpose('comprar')" class="hover:text-gold-400 transition-colors py-1">Comprar</a>
+                    <a href="#imoveis" onclick="setSearchPurpose('alugar')" class="hover:text-gold-400 transition-colors py-1">Alugar</a>
+                    <a href="#lancamentos" class="hover:text-gold-400 transition-colors py-1">Lançamentos</a>
+                    <a href="#sobre" class="hover:text-gold-400 transition-colors py-1">Sobre Nós</a>
+                    <a href="#simulador" class="hover:text-gold-400 transition-colors py-1">Simulador</a>
+                </nav>
+
+                <!-- CONTATOS & BOTÃO ÁREA RESTRITA ADMIN -->
+                <div class="hidden xl:flex items-center gap-6">
+                    <div class="flex flex-col text-right">
+                        <a href="https://wa.me/5554996224511" target="_blank" class="text-xs text-gray-200 hover:text-gold-400 flex items-center justify-end gap-1.5 font-bold">
+                            <i class="fab fa-whatsapp text-green-400 text-sm"></i> (54) 99622-4511
+                        </a>
+                        <a href="https://wa.me/5554999669729" target="_blank" class="text-xs text-gray-200 hover:text-gold-400 flex items-center justify-end gap-1.5 font-bold">
+                            <i class="fab fa-whatsapp text-green-400 text-sm"></i> (54) 99966-9729
+                        </a>
+                    </div>
+                    
+                    <button onclick="checkAdminAuth()" class="bg-navy-800 hover:bg-gold-500 hover:text-navy-900 border border-gray-700 text-gold-400 text-xs px-3.5 py-2 rounded-lg font-bold transition flex items-center gap-1.5 shadow">
+                        <i class="fa-solid fa-user-gear"></i>
+                        <span id="admin-btn-text">Área Restrita</span>
+                    </button>
+                </div>
+
+                <!-- MENU HAMBÚRGUER PARA MOBILE -->
+                <div class="lg:hidden flex items-center gap-3">
+                    <button onclick="checkAdminAuth()" class="bg-navy-800 text-gold-400 text-xs px-2.5 py-1.5 rounded-lg border border-gray-700 font-bold">
+                        <i class="fa-solid fa-lock"></i> Admin
+                    </button>
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DROPDOWN MENU MOBILE -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-navy-950 border-b border-gray-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 text-white font-medium hover:text-gold-400">Início</a>
+            <a href="#imoveis" onclick="setSearchPurpose('comprar'); toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Comprar</a>
+            <a href="#imoveis" onclick="setSearchPurpose('alugar'); toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Alugar</a>
+            <a href="#lancamentos" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Lançamentos</a>
+            <a href="#sobre" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Sobre Nós</a>
+            <a href="#simulador" onclick="toggleMobileMenu()" class="block py-2 text-gray-300 hover:text-gold-400">Simulador</a>
+            <div class="pt-4 border-t border-gray-800 flex flex-col gap-2">
+                <span class="text-xs text-gray-400 uppercase font-bold">Atendimento Aguinara Imóveis:</span>
+                <a href="https://wa.me/5554996224511" target="_blank" class="flex items-center gap-2 text-sm text-green-400 font-bold">
+                    <i class="fab fa-whatsapp"></i> (54) 99622-4511
+                </a>
+                <a href="https://wa.me/5554999669729" target="_blank" class="flex items-center gap-2 text-sm text-green-400 font-bold">
+                    <i class="fab fa-whatsapp"></i> (54) 99966-9729
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- STATUS DA CONEXÃO DO SERVIDOR -->
+    <div id="sync-status-bar" class="bg-navy-950 border-b border-gray-800 py-1.5 px-4 text-[11px] text-gray-300 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span id="storage-status-icon" class="w-2 h-2 rounded-full bg-yellow-500 inline-block animate-pulse"></span>
+                <span id="storage-status-text">Verificando banco de dados no servidor...</span>
+            </div>
+            <button onclick="syncWithServer()" class="text-gold-400 hover:underline text-[10px] font-bold flex items-center gap-1">
+                <i class="fa-solid fa-rotate"></i> Sincronizar Agora
+            </button>
+        </div>
+    </div>
+
+    <!-- HERO SECTION DE APRESENTAÇÃO -->
+    <section id="inicio" class="hero-bg min-h-[580px] flex items-center justify-center py-12 px-4 relative">
+        <div class="max-w-5xl w-full mx-auto text-center">
+            
+            <div class="inline-flex items-center gap-2 bg-navy-800/80 border border-gold-500/30 px-4 py-1.5 rounded-full text-gold-400 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm">
+                <i class="fa-solid fa-crown text-xs text-gold-400"></i> Imóveis de Alto Padrão na Serra Gaúcha
+            </div>
+            <h1 class="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+                Encontre o Seu Imóvel dos Sonhos na <span class="gold-text">Aguinara Imóveis</span>
+            </h1>
+            <p class="text-gray-300 text-sm sm:text-base max-w-2xl mx-auto mb-8">
+                As melhores oportunidades de compra e aluguel em Caxias do Sul, Bento Gonçalves, Farroupilha, Gramado, Canela e Flores da Cunha.
+            </p>
+
+            <!-- CAIXA DE PESQUISA AVANÇADA -->
+            <div class="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-6 shadow-2xl border border-gray-100 text-left">
+                <!-- TABS COMPRAR E ALUGAR -->
+                <div class="flex space-x-2 border-b border-gray-200 pb-4 mb-4">
+                    <button id="tab-comprar" onclick="switchSearchTab('comprar')" class="px-6 py-2 rounded-lg font-bold text-sm transition-all gold-gradient text-navy-900 shadow">
+                        <i class="fa-solid fa-key mr-2"></i>Comprar
+                    </button>
+                    <button id="tab-alugar" onclick="switchSearchTab('alugar')" class="px-6 py-2 rounded-lg font-bold text-sm transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">
+                        <i class="fa-solid fa-building text-xs mr-2"></i>Alugar
+                    </button>
+                </div>
+
+                <!-- FILTROS DE PESQUISA -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Tipo de Imóvel</label>
+                        <select id="filter-tipo" class="w-full bg-gray-50 border border-gray-300 text-gray-800 rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gold-500">
+                            <option value="todos">Todos os Tipos</option>
+                            <option value="Casa">Casa</option>
+                            <option value="Apartamento">Apartamento</option>
+                            <option value="Cobertura">Cobertura</option>
+                            <option value="Terreno">Terreno / Área</option>
+                            <option value="Comercial">Sala Comercial</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Cidade</label>
+                        <select id="filter-cidade" class="w-full bg-gray-50 border border-gray-300 text-gray-800 rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gold-500">
+                            <option value="todas">Todas as Cidades</option>
+                            <option value="Caxias do Sul">Caxias do Sul</option>
+                            <option value="Bento Gonçalves">Bento Gonçalves</option>
+                            <option value="Farroupilha">Farroupilha</option>
+                            <option value="Gramado">Gramado</option>
+                            <option value="Canela">Canela</option>
+                            <option value="Flores da Cunha">Flores da Cunha</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Dormitórios</label>
+                        <select id="filter-quartos" class="w-full bg-gray-50 border border-gray-300 text-gray-800 rounded-lg px-3 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gold-500">
+                            <option value="qualquer">Qualquer quantidade</option>
+                            <option value="1">1+ Dormitório</option>
+                            <option value="2">2+ Dormitórios</option>
+                            <option value="3">3+ Dormitórios</option>
+                            <option value="4">4+ Dormitórios</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Preço Máximo: <span id="price-display" class="text-gold-600 font-extrabold">R$ 5.000.000</span></label>
+                        <input type="range" id="filter-preco" min="100000" max="10000000" step="100000" value="5000000" oninput="updatePriceDisplay(this.value)" class="w-full accent-gold-500 cursor-pointer py-2">
+                    </div>
+                </div>
+
+                <div class="mt-5 flex justify-end">
+                    <button onclick="executeSearch()" class="w-full sm:w-auto gold-gradient text-navy-900 font-extrabold px-8 py-3 rounded-lg text-sm shadow-lg hover:opacity-95 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Buscar na Aguinara Imóveis</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LISTAGEM DOS IMÓVEIS -->
+    <section id="imoveis" class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <span class="text-gold-600 font-bold text-xs uppercase tracking-widest">Catálogo Selecionado</span>
+                    <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-navy-900 mt-1">Imóveis em Destaque</h2>
+                </div>
+
+                <!-- CATEGORIAS RÁPIDAS -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 hide-scrollbar">
+                    <button onclick="filterCategory('todos')" class="cat-btn active px-4 py-2 rounded-full text-xs font-bold bg-navy-900 text-white transition">Todos</button>
+                    <button onclick="filterCategory('Casa')" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Casas</button>
+                    <button onclick="filterCategory('Apartamento')" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Apartamentos</button>
+                    <button onclick="filterCategory('Cobertura')" class="cat-btn px-4 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Coberturas</button>
+                </div>
+            </div>
+
+            <div id="property-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Renderizado dinamicamente via JS -->
+            </div>
+
+            <div id="no-results" class="hidden text-center py-12 bg-white rounded-xl shadow border border-gray-100">
+                <i class="fa-solid fa-house-circle-xmark text-4xl text-gray-400 mb-3"></i>
+                <h3 class="text-lg font-bold text-navy-900">Nenhum imóvel encontrado</h3>
+                <p class="text-gray-500 text-sm mt-1">Tente ajustar os parâmetros da busca para visualizar outras opções da Aguinara Imóveis.</p>
+                <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-navy-900 text-white text-xs font-bold rounded-lg hover:bg-navy-800">Limpar Filtros</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE LANÇAMENTOS EXCLUSIVOS -->
+    <section id="lancamentos" class="py-16 bg-navy-900 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-gold-400 text-xs font-bold tracking-widest uppercase">Curadoria Aguinara</span>
+                <h2 class="font-heading text-3xl font-extrabold mt-1">Lançamentos Exclusivos</h2>
+                <p class="text-gray-400 text-sm mt-2">Empreendimentos de alto padrão selecionados na Serra Gaúcha.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="relative group overflow-hidden rounded-2xl shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80" alt="Empreendimento Exclusivo Aguinara" class="w-full h-96 object-cover transform group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <span class="bg-gold-500 text-navy-900 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Destaque Aguinara</span>
+                        <h3 class="font-heading text-2xl font-bold mt-2">Residencial Gran Valle</h3>
+                        <p class="text-gray-300 text-xs mt-1"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> Villagio Iguatemi, Caxias do Sul</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-navy-800/80 p-6 rounded-xl border border-gray-700/50">
+                        <h4 class="font-heading font-bold text-lg text-gold-400 mb-2">Residencial Gran Valle — Caxias do Sul</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            Apartamentos de 3 suítes com sacada gourmet, churrasqueira e infraestrutura de lazer completa no bairro Villagio Iguatemi.
+                        </p>
+                        <div class="grid grid-cols-3 gap-4 text-center border-t border-gray-700/60 pt-4 mb-6">
+                            <div>
+                                <span class="block font-bold text-lg text-white">180 a 260m²</span>
+                                <span class="text-[11px] text-gray-400 uppercase">Área Privativa</span>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-lg text-white">3 e 4</span>
+                                <span class="text-[11px] text-gray-400 uppercase">Suítes</span>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-lg text-white">3 a 4</span>
+                                <span class="text-[11px] text-gray-400 uppercase">Vagas</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button onclick="openModalLead('Residencial Gran Valle')" class="gold-gradient text-navy-900 font-extrabold px-6 py-3 rounded-lg text-xs tracking-wider uppercase shadow hover:opacity-90 transition text-center">
+                                Solicitar Apresentação
+                            </button>
+                            <a href="https://wa.me/5554996224511?text=Olá,%20gostaria%20de%20informações%20sobre%20o%20Residencial%20Gran%20Valle" target="_blank" class="border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-navy-900 font-bold px-6 py-3 rounded-lg text-xs tracking-wider uppercase transition text-center flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-sm"></i> WhatsApp Aguinara
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SIMULADOR DE FINANCIAMENTO S.A.C. -->
+    <section id="simulador" class="py-16 bg-slate-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-200">
+                <div class="text-center mb-8">
+                    <span class="text-gold-600 font-bold text-xs uppercase tracking-widest">Ferramenta Financeira</span>
+                    <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-navy-900 mt-1">Simulador de Financiamento</h2>
+                    <p class="text-gray-500 text-xs sm:text-sm mt-1">Estime o valor da sua primeira parcela pelo método S.A.C.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Valor do Imóvel (R$)</label>
+                            <input type="number" id="sim-valor" value="850000" step="50000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none" oninput="calcularFinanciamento()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Entrada (R$)</label>
+                            <input type="number" id="sim-entrada" value="200000" step="10000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none" oninput="calcularFinanciamento()">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Prazo (Anos)</label>
+                                <select id="sim-prazo" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none" onchange="calcularFinanciamento()">
+                                    <option value="10">10 Anos</option>
+                                    <option value="15">15 Anos</option>
+                                    <option value="20">20 Anos</option>
+                                    <option value="30" selected>30 Anos</option>
+                                    <option value="35">35 Anos</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Taxa Juros a.a. (%)</label>
+                                <input type="number" id="sim-juros" value="10.5" step="0.1" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none" oninput="calcularFinanciamento()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-navy-900 text-white rounded-xl p-6 text-center flex flex-col justify-between h-full border-t-4 border-gold-500 shadow-lg">
+                        <div>
+                            <span class="text-xs uppercase tracking-widest text-gray-400 font-bold">1ª Parcela Estimada</span>
+                            <div id="sim-resultado" class="text-3xl sm:text-4xl font-extrabold gold-text my-3">R$ 0,00</div>
+                            <p class="text-gray-400 text-xs">Amortização Sistema S.A.C.</p>
+                        </div>
+
+                        <div class="border-t border-gray-800 pt-4 mt-6 text-xs text-gray-300 space-y-1">
+                            <div class="flex justify-between">
+                                <span>Valor Financiado:</span>
+                                <span id="sim-valor-financiado" class="font-bold text-white">R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Total de Meses:</span>
+                                <span id="sim-total-meses" class="font-bold text-white">360</span>
+                            </div>
+                        </div>
+
+                        <button onclick="openModalLead('Simulação de Crédito Aguinara')" class="mt-6 w-full gold-gradient text-navy-900 font-extrabold py-2.5 rounded-lg text-xs uppercase tracking-wider shadow hover:opacity-95 transition">
+                            Solicitar Aprovação de Crédito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE NÓS -->
+    <section id="sobre" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-gold-600 font-bold text-xs uppercase tracking-widest">Tradição & Segurança</span>
+                    <h2 class="font-heading text-3xl font-extrabold text-navy-900 mt-1 mb-4">Sobre a Aguinara Imóveis</h2>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        A <strong class="text-navy-900">Aguinara Imóveis</strong> é referência no mercado imobiliário da Serra Gaúcha, atuando com transparência, agilidade e consultoria personalizada para compra, venda e locação de imóveis residenciais e comerciais.
+                    </p>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        Nossa equipe de corretores oferece suporte completo do início ao fim do processo, incluindo avaliação imobiliária e análise jurídica dos contratos.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a href="https://wa.me/5554996224511" target="_blank" class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-xl hover:border-gold-500 transition shadow-sm">
+                            <div class="w-10 h-10 rounded-lg gold-gradient flex items-center justify-center text-navy-900 font-bold shrink-0">
+                                <i class="fab fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 text-sm">(54) 99622-4511</h4>
+                                <p class="text-gray-500 text-xs">Atendimento Direto</p>
+                            </div>
+                        </a>
+                        <a href="https://wa.me/5554999669729" target="_blank" class="flex items-center gap-3 p-3 bg-gray-50 border border-gray-200 rounded-xl hover:border-gold-500 transition shadow-sm">
+                            <div class="w-10 h-10 rounded-lg gold-gradient flex items-center justify-center text-navy-900 font-bold shrink-0">
+                                <i class="fab fa-whatsapp text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-navy-900 text-sm">(54) 99966-9729</h4>
+                                <p class="text-gray-500 text-xs">Atendimento Comercial</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-navy-900 text-white rounded-2xl p-8 border-b-4 border-gold-500 shadow-xl">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-20 h-20 rounded-xl overflow-hidden shadow-md bg-navy-950 border border-gold-500/40 p-1 flex items-center justify-center shrink-0" id="about-logo-container"></div>
+                        <div>
+                            <h3 class="font-heading font-bold text-xl text-gold-400">Região de Atuação</h3>
+                            <p class="text-xs text-gray-400">Principais Cidades da Serra Gaúcha</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="p-3 bg-navy-800 rounded-lg border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-gold-400"></i> Caxias do Sul
+                        </div>
+                        <div class="p-3 bg-navy-800 rounded-lg border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-gold-400"></i> Bento Gonçalves
+                        </div>
+                        <div class="p-3 bg-navy-800 rounded-lg border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-gold-400"></i> Farroupilha
+                        </div>
+                        <div class="p-3 bg-navy-800 rounded-lg border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-gold-400"></i> Gramado
+                        </div>
+                        <div class="p-3 bg-navy-800 rounded-lg border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-gold-400"></i> Canela
+                        </div>
+                        <div class="p-3 bg-navy-800 rounded-lg border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-gold-400"></i> Flores da Cunha
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER DO SITE -->
+    <footer class="bg-navy-950 text-white pt-12 pb-8 border-t border-navy-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="w-28 h-28 mb-4" id="footer-logo-container"></div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                        Sua imobiliária de confiança na Serra Gaúcha.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-sm text-gold-400 uppercase tracking-wider mb-4">Cidades Atendidas</h4>
+                    <ul class="space-y-2 text-xs text-gray-300">
+                        <li><a href="#imoveis" onclick="filterCity('Caxias do Sul')" class="hover:text-gold-400 transition">Caxias do Sul</a></li>
+                        <li><a href="#imoveis" onclick="filterCity('Bento Gonçalves')" class="hover:text-gold-400 transition">Bento Gonçalves</a></li>
+                        <li><a href="#imoveis" onclick="filterCity('Farroupilha')" class="hover:text-gold-400 transition">Farroupilha</a></li>
+                        <li><a href="#imoveis" onclick="filterCity('Gramado')" class="hover:text-gold-400 transition">Gramado & Canela</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-sm text-gold-400 uppercase tracking-wider mb-4">Contatos Diretos</h4>
+                    <ul class="space-y-3 text-xs text-gray-300">
+                        <li class="flex items-center gap-2">
+                            <i class="fab fa-whatsapp text-green-400 text-sm"></i>
+                            <a href="https://wa.me/5554996224511" target="_blank" class="hover:text-gold-400 font-bold">(54) 99622-4511</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fab fa-whatsapp text-green-400 text-sm"></i>
+                            <a href="https://wa.me/5554999669729" target="_blank" class="hover:text-gold-400 font-bold">(54) 99966-9729</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-gold-400"></i>
+                            <span>embaguiar@hotmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-heading font-bold text-sm text-gold-400 uppercase tracking-wider mb-4">Painel do Corretor</h4>
+                    <p class="text-xs text-gray-400 mb-3">Gerenciamento do catálogo com banco de dados e upload de mídia.</p>
+                    <button onclick="checkAdminAuth()" class="w-full bg-navy-800 hover:bg-gold-500 hover:text-navy-900 border border-gray-700 text-gold-400 font-bold py-2.5 rounded-lg text-xs transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-lock"></i> Acessar Área Restrita
+                    </button>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+                <p>&copy; 2026 Aguinara Imóveis. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+    <a href="https://wa.me/5554996224511" target="_blank" class="fixed bottom-6 right-6 z-40 bg-green-500 hover:bg-green-600 text-white p-3.5 rounded-full shadow-2xl transition duration-300 hover:scale-110 flex items-center justify-center" aria-label="Atendimento via WhatsApp">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- MODAL DETALHES DO IMÓVEL (PÚBLICO) -->
+    <div id="modal-details" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
+            <div id="modal-details-content">
+                <!-- Conteúdo carregado dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LEAD / CONTATO -->
+    <div id="modal-lead" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeModalLead()" class="absolute top-4 right-4 text-gray-400 hover:text-navy-900">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="font-heading font-extrabold text-navy-900 text-xl mb-1">Interesse em Imóvel</h3>
+            <p id="lead-subtitle" class="text-xs text-gray-500 mb-4">Preencha os dados abaixo para receber atendimento exclusivo da equipe Aguinara.</p>
+            
+            <form onsubmit="submitLeadForm(event)" class="space-y-3">
+                <input type="hidden" id="lead-subject" value="Geral">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Nome Completo</label>
+                    <input type="text" id="lead-nome" required class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">WhatsApp / Telefone</label>
+                    <input type="tel" id="lead-phone" required placeholder="(54) 99999-9999" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">E-mail</label>
+                    <input type="email" id="lead-email" required placeholder="seu@email.com" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Mensagem (Opcional)</label>
+                    <textarea id="lead-msg" rows="3" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none" placeholder="Qual o melhor horário para contato?"></textarea>
+                </div>
+                <button type="submit" class="w-full gold-gradient text-navy-900 font-extrabold py-3 rounded-lg text-sm shadow hover:opacity-95 transition">
+                    Enviar para Atendimento
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE LOGIN ADMIN -->
+    <div id="modal-login" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-navy-900 text-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-gold-500/30 relative">
+            <button onclick="closeModalLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="text-center mb-6">
+                <i class="fa-solid fa-user-shield text-3xl text-gold-400 mb-2"></i>
+                <h3 class="font-heading font-extrabold text-xl">Área Restrita Admin</h3>
+                <p class="text-xs text-gray-400">Acesso exclusivo para corretores da Aguinara</p>
+            </div>
+            
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase mb-1">E-mail do administrador</label>
+                    <input type="email" id="login-user" required class="w-full bg-navy-800 border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Senha</label>
+                    <input type="password" id="login-pass" required class="w-full bg-navy-800 border border-gray-700 rounded-lg p-2.5 text-sm text-white focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                </div>
+                <p id="login-error" class="text-red-400 text-xs hidden font-bold text-center">Usuário ou senha incorretos!</p>
+                <button type="submit" class="w-full gold-gradient text-navy-900 font-extrabold py-3 rounded-lg text-sm shadow hover:opacity-95 transition">
+                    Acessar Painel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL ADMINISTRATIVO COM SUPORTE A UPLOAD, SERVIDOR E DOWNLOAD JSON -->
+    <div id="modal-admin" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl border border-gray-200">
+            <div class="p-6 bg-navy-900 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sticky top-0 z-20">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-sliders text-gold-400 text-xl"></i>
+                    <div>
+                        <h3 class="font-heading font-extrabold text-lg">Painel de Gestão de Imóveis</h3>
+                        <p class="text-xs text-gray-400">Gerenciar imóveis e fotos com Supabase</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="openFormNewProperty()" class="gold-gradient text-navy-900 text-xs font-extrabold px-3 py-2 rounded-lg shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> Novo Imóvel
+                    </button>
+                    <button onclick="exportJSON()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-lg transition flex items-center gap-1.5" title="Exportar cópia de segurança do catálogo">
+                        <i class="fa-solid fa-file-export"></i> Exportar JSON
+                    </button>
+                    <label class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-3 py-2 rounded-lg transition cursor-pointer flex items-center gap-1.5" title="Importar catálogo antigo para o Supabase (apenas ADM)">
+                        <i class="fa-solid fa-file-import"></i> Importar JSON
+                        <input type="file" id="import-json-file" accept=".json" class="hidden" onchange="importJSON(event)">
+                    </label>
+                    <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-2 rounded-lg transition">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sair
+                    </button>
+                    <button onclick="closeModalAdmin()" class="text-gray-400 hover:text-white p-1">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- BARRA DE SERVIDOR NO PAINEL -->
+            <div class="bg-navy-950 px-6 py-3 border-b border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-300">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-server text-gold-400"></i>
+                    <span>Modo de Armazenamento: <strong id="storage-mode-label" class="text-white">Detectando...</strong></span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="syncWithServer()" class="bg-navy-800 hover:bg-navy-700 text-gold-400 border border-gray-700 px-3 py-1 rounded font-bold transition flex items-center gap-1">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Atualizar Catálogo do Supabase
+                    </button>
+                    <button onclick="syncWithServer()" class="bg-gold-500 hover:bg-gold-600 text-navy-900 px-3 py-1 rounded font-bold transition flex items-center gap-1">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Atualizar Catálogo
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <!-- FORMULÁRIO DE CADASTRO/EDIÇÃO COM PRÉVIA EM TEMPO REAL -->
+                <div id="admin-form-container" class="hidden mb-8 p-6 bg-slate-50 rounded-xl border border-gray-300 shadow-inner">
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-300">
+                        <h4 id="admin-form-title" class="font-heading font-bold text-navy-900 text-base">Cadastrar Novo Imóvel</h4>
+                        <button onclick="cancelAdminForm()" class="text-xs text-gray-500 hover:text-red-600 font-bold">Cancelar / Fechar</button>
+                    </div>
+
+                    <!-- GRID DIVIDINDO FORMULÁRIO E PRÉVIA EM TEMPO REAL -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <!-- COLUNA ESQUERDA: FORMULÁRIO (7 colunas) -->
+                        <form id="property-form" onsubmit="saveProperty(event)" class="lg:col-span-7 space-y-4">
+                            <input type="hidden" id="form-id">
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="sm:col-span-2">
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Título do Anúncio</label>
+                                    <input type="text" id="form-titulo" required oninput="updateAdminPreview()" placeholder="Ex: Casa Duplex com Suíte e Piscina" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Finalidade</label>
+                                    <select id="form-finalidade" onchange="updateAdminPreview()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                        <option value="Comprar">Venda (Comprar)</option>
+                                        <option value="Alugar">Locação (Alugar)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Tipo de Imóvel</label>
+                                    <select id="form-tipo" onchange="updateAdminPreview()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                        <option value="Casa">Casa</option>
+                                        <option value="Apartamento">Apartamento</option>
+                                        <option value="Cobertura">Cobertura</option>
+                                        <option value="Terreno">Terreno / Área</option>
+                                        <option value="Comercial">Sala Comercial</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Valor do Imóvel (R$)</label>
+                                    <input type="number" id="form-preco" required oninput="updateAdminPreview()" placeholder="850000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Cidade</label>
+                                    <select id="form-cidade" onchange="updateAdminPreview()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                        <option value="Caxias do Sul">Caxias do Sul</option>
+                                        <option value="Bento Gonçalves">Bento Gonçalves</option>
+                                        <option value="Farroupilha">Farroupilha</option>
+                                        <option value="Gramado">Gramado</option>
+                                        <option value="Canela">Canela</option>
+                                        <option value="Flores da Cunha">Flores da Cunha</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Bairro</label>
+                                    <input type="text" id="form-bairro" required oninput="updateAdminPreview()" placeholder="Ex: Panazzolo" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Área Privativa (m²)</label>
+                                    <input type="number" id="form-area" required oninput="updateAdminPreview()" placeholder="140" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Dormitórios</label>
+                                    <input type="number" id="form-quartos" required oninput="updateAdminPreview()" value="3" min="0" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Suítes</label>
+                                    <input type="number" id="form-suites" required oninput="updateAdminPreview()" value="1" min="0" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Banheiros</label>
+                                    <input type="number" id="form-banheiros" required oninput="updateAdminPreview()" value="2" min="0" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Vagas de Garagem</label>
+                                    <input type="number" id="form-vagas" required oninput="updateAdminPreview()" value="2" min="0" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Descrição Completa</label>
+                                <textarea id="form-descricao" rows="3" required oninput="updateAdminPreview()" placeholder="Descreva os diferenciais do imóvel..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none"></textarea>
+                            </div>
+
+                            <!-- UPLOAD DE IMAGENS DO DISPOSITIVO -->
+                            <div class="border-t border-gray-300 pt-3">
+                                <label class="block text-xs font-bold text-navy-900 uppercase mb-2">
+                                    <i class="fa-solid fa-cloud-arrow-up text-gold-500 mr-1"></i> Carregar Imagens do Computador / Celular
+                                </label>
+                                
+                                <div class="p-4 bg-white border-2 border-dashed border-gray-300 rounded-xl text-center hover:border-gold-500 transition">
+                                    <input type="file" id="file-upload-input" accept="image/*" multiple onchange="handleFileUpload(event)" class="hidden">
+                                    <label for="file-upload-input" class="cursor-pointer flex flex-col items-center justify-center gap-1">
+                                        <i class="fa-solid fa-images text-3xl text-gold-500"></i>
+                                        <span class="text-xs font-bold text-navy-900 mt-1">Clique para escolher arquivos de imagem</span>
+                                        <span class="text-[11px] text-gray-400">Suporta múltiplos arquivos (JPG, PNG, WEBP)</span>
+                                    </label>
+                                </div>
+
+                                <!-- LISTA / MINIATURAS DAS FOTOS CARREGADAS -->
+                                <div class="mt-3">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-[11px] font-bold text-gray-600 uppercase">Fotos Adicionadas (<span id="photo-count-label">0</span>):</span>
+                                        <button type="button" onclick="clearAllPhotos()" class="text-[10px] text-red-600 font-bold hover:underline">Limpar todas</button>
+                                    </div>
+                                    <div id="photos-preview-list" class="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                                        <!-- Miniaturas renderizadas via JS -->
+                                    </div>
+                                </div>
+
+                                <!-- OPÇÃO SECUNDÁRIA: ADICIONAR LINK/URL -->
+                                <div class="mt-3 pt-3 border-t border-gray-200">
+                                    <span class="block text-[11px] font-bold text-gray-500 mb-1">Ou adicione por link (URL Externa):</span>
+                                    <div class="flex gap-2">
+                                        <input type="url" id="form-url-input" placeholder="https://exemplo.com/imagem.jpg" class="flex-1 border border-gray-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-gold-500 focus:outline-none">
+                                        <button type="button" onclick="addPhotoFromUrl()" class="bg-navy-800 text-white font-bold px-3 py-1.5 rounded text-xs hover:bg-gold-500 hover:text-navy-900 transition">
+                                            Adicionar Link
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VÍDEOS DO IMÓVEL -->
+                            <div class="border-t border-gray-300 pt-3">
+                                <label class="block text-xs font-bold text-navy-900 uppercase mb-2">
+                                    <i class="fa-solid fa-video text-gold-500 mr-1"></i> Vídeo do Imóvel (YouTube / MP4)
+                                </label>
+                                <input type="url" id="form-video-url" oninput="updateAdminPreview()" placeholder="https://www.youtube.com/watch?v=..." class="w-full border border-gray-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+
+                            <div class="pt-2 flex gap-3">
+                                <button type="submit" class="gold-gradient text-navy-900 font-extrabold px-6 py-2.5 rounded-lg text-xs tracking-wider uppercase shadow hover:opacity-95 transition">
+                                    Salvar Imóvel
+                                </button>
+                                <button type="button" onclick="cancelAdminForm()" class="bg-gray-200 text-gray-700 font-bold px-4 py-2.5 rounded-lg text-xs hover:bg-gray-300 transition">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- COLUNA DIREITA: PRÉVIA EM TEMPO REAL (5 colunas) -->
+                        <div class="lg:col-span-5 bg-white p-4 rounded-xl border border-gray-300 shadow-sm sticky top-20">
+                            <div class="flex items-center justify-between border-b border-gray-200 pb-2 mb-3">
+                                <span class="text-xs font-extrabold text-navy-900 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i class="fa-solid fa-eye text-gold-500"></i> Prévia do Anúncio
+                                </span>
+                                <span class="text-[10px] text-gray-400">Ao vivo</span>
+                            </div>
+
+                            <!-- CARD DE PRÉVIA -->
+                            <div id="admin-live-preview-card" class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                                <!-- Renderizado dinamicamente pelo JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TABELA DE IMÓVEIS -->
+                <div>
+                    <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider mb-3">Imóveis Cadastrados</h4>
+                    <div class="overflow-x-auto border border-gray-200 rounded-xl">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-navy-900 text-white font-bold uppercase tracking-wider">
+                                    <th class="p-3">Foto Principal</th>
+                                    <th class="p-3">Título / Bairro</th>
+                                    <th class="p-3">Tipo / Cidade</th>
+                                    <th class="p-3">Finalidade</th>
+                                    <th class="p-3">Valor</th>
+                                    <th class="p-3 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-body" class="divide-y divide-gray-200 text-gray-700 font-medium">
+                                <!-- Preenchido dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- LÓGICA JAVASCRIPT PRINCIPAL COM SUPABASE -->
+    <script>
+        // BANCO DE DADOS INICIAL DE IMÓVEIS (FALLBACK SE NÃO HOUVER NO SERVIDOR/LOCAL)
+        let INITIAL_PROPERTIES = [
+            {
+                id: "1",
+                titulo: "Casa de Alto Padrão no Bairro Exposição",
+                finalidade: "Comprar",
+                tipo: "Casa",
+                preco: 1850000,
+                cidade: "Caxias do Sul",
+                bairro: "Exposição",
+                area: 320,
+                quartos: 4,
+                suites: 2,
+                banheiros: 4,
+                vagas: 3,
+                descricao: "Residência fantástica com finíssimo acabamento, amplo quintal, espaço gourmet com churrasqueira, piso aquecido e localização nobre próximo ao Parque dos Macacos.",
+                fotos: [
+                    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
+                ],
+                videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            },
+            {
+                id: "2",
+                titulo: "Apartamento 3 Suítes no Villagio Iguatemi",
+                finalidade: "Comprar",
+                tipo: "Apartamento",
+                preco: 980000,
+                cidade: "Caxias do Sul",
+                bairro: "Villagio Iguatemi",
+                area: 165,
+                quartos: 3,
+                suites: 3,
+                banheiros: 4,
+                vagas: 2,
+                descricao: "Apartamento seminovo com vista panorâmica, sacada integrada, esquadrias com isolamento acústico e prédio com infraestrutura de clube completa.",
+                fotos: [
+                    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"
+                ],
+                videoUrl: ""
+            },
+            {
+                id: "3",
+                titulo: "Cobertura Duplex no Centro de Bento Gonçalves",
+                finalidade: "Comprar",
+                tipo: "Cobertura",
+                preco: 1450000,
+                cidade: "Bento Gonçalves",
+                bairro: "Centro",
+                area: 280,
+                quartos: 3,
+                suites: 2,
+                banheiros: 3,
+                vagas: 3,
+                descricao: "Exclusiva cobertura com terraço privativo, jacuzzi, lareira e vista incrível para a Capital do Vinho. Excelente orientação solar.",
+                fotos: [
+                    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
+                ],
+                videoUrl: ""
+            }
+        ];
+
+        // VARIÁVEIS DE ESTADO
+        let properties = [];
+        let currentSearchTab = "comprar";
+        let activeCategory = "todos";
+        let isAdminLoggedIn = false;
+        let currentFormPhotos = [];
+        let isServerConnected = false;
+
+        // INICIALIZAÇÃO
+        document.addEventListener("DOMContentLoaded", async function() {
+            document.getElementById('header-logo-container').innerHTML = AGUINARA_EXACT_LOGO_SVG;
+            document.getElementById('about-logo-container').innerHTML = AGUINARA_EXACT_LOGO_SVG;
+            document.getElementById('footer-logo-container').innerHTML = AGUINARA_EXACT_LOGO_SVG;
+
+            // Carrega imóveis (Primeiro tenta o Servidor / imoveis.json, depois localStorage)
+            await syncWithServer();
+            if (banco) {
+                const {data} = await banco.auth.getSession();
+                isAdminLoggedIn = Boolean(data.session);
+                const buttonText = document.getElementById('admin-btn-text');
+                if (buttonText && isAdminLoggedIn) buttonText.innerText = 'Painel Ativo';
+            }
+            calcularFinanciamento();
+        });
+
+        // CONFIGURAÇÃO: insira apenas a chave PUBLICÁVEL (sb_publishable_...).
+        // Nunca insira service_role ou sb_secret_ no HTML.
+        const SUPABASE_URL = 'https://xaudsqsvtlxhsgdaqhme.supabase.co';
+        const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_2KaEbBdMw655YvOGY08_Pw__GepYizr';
+        const supabaseReady = SUPABASE_PUBLISHABLE_KEY.startsWith('sb_publishable_');
+        const banco = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY) : null;
+        let pendingPhotos = new Map();
+        let savingProperty = false;
+
+        async function syncWithServer() {
+            if (!banco) {
+                updateStorageStatus('local', 'Configure a chave pública do Supabase no HTML antes de publicar.');
+                properties = [];
+                renderPropertyGrid(properties);
+                return;
+            }
+            updateStorageStatus('checking', 'Buscando catálogo no Supabase...');
+            const { data, error } = await banco.from('imoveis').select('id,dados').order('criado_em', { ascending: false });
+            if (error) {
+                console.error('Supabase: falha ao buscar imóveis', error);
+                updateStorageStatus('local', 'Erro ao conectar ao catálogo: ' + error.message);
+                return; // Não substituir por catálogo local antigo ou exemplo.
+            }
+            properties = data.map(row => ({ ...row.dados, id: String(row.id) }));
+            isServerConnected = true;
+            updateStorageStatus('success', `Supabase conectado • ${properties.length} imóveis`);
+            renderPropertyGrid(properties);
+            if (isAdminLoggedIn) renderAdminTable();
+        }
+
+        // Compatibilidade com eventuais chamadas antigas: as operações são individuais.
+        async function savePropertiesToStorage() {
+            await syncWithServer();
+        }
+
+        async function uploadPhoto(photo) {
+            if (typeof photo === 'string' && !photo.startsWith('data:')) return photo;
+            let file = pendingPhotos.get(photo);
+            if (!file && typeof photo === 'string' && photo.startsWith('data:')) {
+                const response = await fetch(photo);
+                const blob = await response.blob();
+                const ext = blob.type === 'image/png' ? 'png' : blob.type === 'image/webp' ? 'webp' : 'jpg';
+                file = new File([blob], `foto.${ext}`, {type: blob.type || 'image/jpeg'});
+            }
+            if (!file) throw new Error('Imagem pendente não encontrada; selecione-a novamente.');
+            const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg';
+            const name = `imoveis/${crypto.randomUUID()}.${ext}`;
+            const { error } = await banco.storage.from('fotos-imoveis').upload(name, file, {contentType: file.type, upsert: false});
+            if (error) throw error;
+            return banco.storage.from('fotos-imoveis').getPublicUrl(name).data.publicUrl;
+        }
+
+        async function requireAdmin() {
+            if (!banco) throw new Error('Configure a chave publicável do Supabase.');
+            const {data, error} = await banco.auth.getUser();
+            if (error || !data.user) throw new Error('Faça login novamente.');
+            return data.user;
+        }
+
+        function updateStorageStatus(type, text) {
+            const icon = document.getElementById("storage-status-icon");
+            const textEl = document.getElementById("storage-status-text");
+            const modeLabel = document.getElementById("storage-mode-label");
+
+            if (!icon || !textEl) return;
+
+            textEl.innerText = text;
+            if (modeLabel) modeLabel.innerText = text;
+
+            if (type === 'success') {
+                icon.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-lg";
+            } else if (type === 'checking') {
+                icon.className = "w-2.5 h-2.5 rounded-full bg-amber-400 inline-block animate-ping";
+            } else {
+                icon.className = "w-2.5 h-2.5 rounded-full bg-blue-400 inline-block";
+            }
+        }
+
+        // EXPORTAR E IMPORTAR ARQUIVO JSON DO SERVIDOR
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(properties, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", "imoveis.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        async function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            try {
+                await requireAdmin();
+                const imported = JSON.parse(await file.text());
+                if (!Array.isArray(imported)) throw new Error('O JSON deve conter uma lista de imóveis.');
+                if (!confirm(`Importar ${imported.length} imóveis? IDs existentes serão atualizados, sem apagar outros cadastros. Faça uma cópia de segurança primeiro.`)) return;
+                updateStorageStatus('checking', 'Importando catálogo...');
+                let count = 0;
+                for (const original of imported) {
+                    const prop = {...original, id: String(original.id || crypto.randomUUID())};
+                    if (!prop.titulo) throw new Error('Imóvel sem título no arquivo.');
+                    prop.fotos = await Promise.all((prop.fotos || []).map(uploadPhoto));
+                    const {error} = await banco.from('imoveis').upsert({id:prop.id,dados:prop},{onConflict:'id'});
+                    if (error) throw error;
+                    count++;
+                }
+                await syncWithServer();
+                alert(`${count} imóveis importados para o Supabase. Confira o catálogo.`);
+            } catch (error) {
+                console.error(error);
+                alert('Falha na importação: ' + error.message + '. Alguns itens podem ter sido importados; confira o catálogo.');
+                await syncWithServer();
+            } finally {event.target.value = '';}
+        }
+
+        // ALTERAR TAB COMPRAR / ALUGAR
+        function switchSearchTab(tab) {
+            currentSearchTab = tab;
+            const btnComprar = document.getElementById("tab-comprar");
+            const btnAlugar = document.getElementById("tab-alugar");
+
+            if (tab === "comprar") {
+                btnComprar.className = "px-6 py-2 rounded-lg font-bold text-sm transition-all gold-gradient text-navy-900 shadow";
+                btnAlugar.className = "px-6 py-2 rounded-lg font-bold text-sm transition-all bg-gray-100 text-gray-600 hover:bg-gray-200";
+            } else {
+                btnAlugar.className = "px-6 py-2 rounded-lg font-bold text-sm transition-all gold-gradient text-navy-900 shadow";
+                btnComprar.className = "px-6 py-2 rounded-lg font-bold text-sm transition-all bg-gray-100 text-gray-600 hover:bg-gray-200";
+            }
+        }
+
+        function setSearchPurpose(purpose) {
+            switchSearchTab(purpose);
+            executeSearch();
+        }
+
+        function updatePriceDisplay(val) {
+            const formatted = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(val);
+            document.getElementById("price-display").innerText = formatted;
+        }
+
+        // RENDERIZAR GRID DE IMÓVEIS NO SITE
+        function renderPropertyGrid(items) {
+            const grid = document.getElementById("property-grid");
+            const noResults = document.getElementById("no-results");
+            grid.innerHTML = "";
+
+            if (!items || items.length === 0) {
+                noResults.classList.remove("hidden");
+                return;
+            }
+            noResults.classList.add("hidden");
+
+            items.forEach(prop => {
+                const card = document.createElement("div");
+                card.className = "bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition duration-300 flex flex-col group";
+
+                const mainPhoto = (prop.fotos && prop.fotos.length > 0 && prop.fotos[0]) ? prop.fotos[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80';
+                const formattedPrice = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(prop.preco);
+                
+                const purposeBadge = prop.finalidade === 'Alugar' ? 
+                    '<span class="bg-blue-600 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider">Locação</span>' :
+                    '<span class="bg-gold-500 text-navy-900 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md tracking-wider">Venda</span>';
+
+                const totalPhotos = prop.fotos ? prop.fotos.filter(f => f && f.trim() !== "").length : 0;
+
+                card.innerHTML = `
+                    <div class="relative overflow-hidden h-56 bg-gray-200 cursor-pointer" onclick="openPropertyModal('${prop.id}')">
+                        <img src="${mainPhoto}" alt="${prop.titulo}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-3 left-3 flex gap-2">
+                            ${purposeBadge}
+                            <span class="bg-navy-900/80 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-md backdrop-blur-sm">${prop.tipo}</span>
+                        </div>
+                        ${totalPhotos > 1 ? `<span class="absolute bottom-3 right-3 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full font-bold backdrop-blur-sm"><i class="fa-solid fa-camera mr-1"></i>${totalPhotos} fotos</span>` : ''}
+                    </div>
+
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs font-bold text-gray-400 flex items-center gap-1 mb-1">
+                                <i class="fa-solid fa-location-dot text-gold-500"></i>
+                                <span>${prop.bairro}, ${prop.cidade}</span>
+                            </div>
+                            <h3 class="font-heading font-extrabold text-navy-900 text-base leading-snug hover:text-gold-600 transition cursor-pointer" onclick="openPropertyModal('${prop.id}')">
+                                ${prop.titulo}
+                            </h3>
+                            <div class="text-xl font-black text-gold-600 my-3">
+                                ${formattedPrice} ${prop.finalidade === 'Alugar' ? '<span class="text-xs text-gray-400 font-normal">/ mês</span>' : ''}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="grid grid-cols-4 gap-2 py-3 border-y border-gray-100 text-center text-gray-600 text-xs my-3">
+                                <div title="Dormitórios">
+                                    <i class="fa-solid fa-bed text-gold-500 block mb-1"></i>
+                                    <span class="font-bold">${prop.quartos}</span>
+                                </div>
+                                <div title="Suítes">
+                                    <i class="fa-solid fa-bath text-gold-500 block mb-1"></i>
+                                    <span class="font-bold">${prop.suites}</span>
+                                </div>
+                                <div title="Vagas">
+                                    <i class="fa-solid fa-car text-gold-500 block mb-1"></i>
+                                    <span class="font-bold">${prop.vagas}</span>
+                                </div>
+                                <div title="Área Privativa">
+                                    <i class="fa-solid fa-ruler-combined text-gold-500 block mb-1"></i>
+                                    <span class="font-bold">${prop.area}m²</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <button onclick="openPropertyModal('${prop.id}')" class="flex-1 bg-navy-900 hover:bg-navy-800 text-white font-bold py-2 rounded-lg text-xs transition">
+                                    Ver Detalhes
+                                </button>
+                                <a href="https://wa.me/5554996224511?text=Olá,%20tenho%20interesse%20no%20imóvel:%20${encodeURIComponent(prop.titulo)}%20(Código%20${prop.id})" target="_blank" class="w-10 h-9 bg-green-500 hover:bg-green-600 text-white rounded-lg flex items-center justify-center transition" title="Contato via WhatsApp">
+                                    <i class="fab fa-whatsapp text-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // BUSCA E FILTRAGEM
+        function executeSearch() {
+            const tipo = document.getElementById("filter-tipo").value;
+            const cidade = document.getElementById("filter-cidade").value;
+            const quartos = document.getElementById("filter-quartos").value;
+            const precoMax = parseFloat(document.getElementById("filter-preco").value);
+
+            const filtered = properties.filter(p => {
+                if (currentSearchTab === "comprar" && p.finalidade !== "Comprar") return false;
+                if (currentSearchTab === "alugar" && p.finalidade !== "Alugar") return false;
+                if (tipo !== "todos" && p.tipo !== tipo) return false;
+                if (cidade !== "todas" && p.cidade !== cidade) return false;
+                if (quartos !== "qualquer" && p.quartos < parseInt(quartos)) return false;
+                if (p.preco > precoMax) return false;
+
+                return true;
+            });
+
+            renderPropertyGrid(filtered);
+            document.getElementById("imoveis").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            document.querySelectorAll(".cat-btn").forEach(btn => {
+                if (btn.innerText.toLowerCase() === cat.toLowerCase() || (cat === 'todos' && btn.innerText === 'Todos')) {
+                    btn.className = "cat-btn active px-4 py-2 rounded-full text-xs font-bold bg-navy-900 text-white transition";
+                } else {
+                    btn.className = "cat-btn px-4 py-2 rounded-full text-xs font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition";
+                }
+            });
+
+            if (cat === "todos") {
+                renderPropertyGrid(properties);
+            } else {
+                const filtered = properties.filter(p => p.tipo === cat);
+                renderPropertyGrid(filtered);
+            }
+        }
+
+        function filterCity(cityName) {
+            document.getElementById("filter-cidade").value = cityName;
+            executeSearch();
+        }
+
+        function resetFilters() {
+            document.getElementById("filter-tipo").value = "todos";
+            document.getElementById("filter-cidade").value = "todas";
+            document.getElementById("filter-quartos").value = "qualquer";
+            document.getElementById("filter-preco").value = 5000000;
+            updatePriceDisplay(5000000);
+            renderPropertyGrid(properties);
+        }
+
+        // SIMULADOR DE FINANCIAMENTO S.A.C.
+        function calcularFinanciamento() {
+            const valorTotal = parseFloat(document.getElementById("sim-valor").value) || 0;
+            const entrada = parseFloat(document.getElementById("sim-entrada").value) || 0;
+            const prazoAnos = parseInt(document.getElementById("sim-prazo").value) || 30;
+            const taxaJurosAnual = parseFloat(document.getElementById("sim-juros").value) || 10.5;
+
+            const valorFinanciado = Math.max(0, valorTotal - entrada);
+            const totalMeses = prazoAnos * 12;
+            const taxaJurosMensal = (taxaJurosAnual / 100) / 12;
+
+            const amortizacaoMensal = totalMeses > 0 ? valorFinanciado / totalMeses : 0;
+            const jurosPrimeiroMes = valorFinanciado * taxaJurosMensal;
+            const primeiraParcela = amortizacaoMensal + jurosPrimeiroMes;
+
+            document.getElementById("sim-resultado").innerText = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(primeiraParcela);
+            document.getElementById("sim-valor-financiado").innerText = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valorFinanciado);
+            document.getElementById("sim-total-meses").innerText = totalMeses + " meses";
+        }
+
+        // MODAL DETALHES DO IMÓVEL (PÚBLICO)
+        function openPropertyModal(id) {
+            const prop = properties.find(p => p.id === id.toString());
+            if (!prop) return;
+
+            const modal = document.getElementById("modal-details");
+            const content = document.getElementById("modal-details-content");
+            const formattedPrice = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(prop.preco);
+
+            const fotosValidas = prop.fotos ? prop.fotos.filter(f => f && f.trim() !== "") : [];
+            const mainPhoto = fotosValidas.length > 0 ? fotosValidas[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80';
+
+            let galleryHTML = '';
+            fotosValidas.forEach((foto, idx) => {
+                galleryHTML += `
+                    <img src="${foto}" alt="Foto ${idx+1}" onclick="switchModalMainPhoto('${foto}')" class="w-20 h-20 object-cover rounded-lg border-2 border-transparent hover:border-gold-500 cursor-pointer shadow-sm">
+                `;
+            });
+
+            content.innerHTML = `
+                <div class="relative bg-navy-900 text-white p-6 rounded-t-2xl flex justify-between items-start">
+                    <div>
+                        <span class="bg-gold-500 text-navy-900 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded tracking-wider mr-2">${prop.finalidade}</span>
+                        <span class="bg-navy-800 text-gray-300 text-[10px] font-bold uppercase px-2.5 py-1 rounded tracking-wider">${prop.tipo}</span>
+                        <h2 class="font-heading font-extrabold text-2xl mt-2">${prop.titulo}</h2>
+                        <p class="text-xs text-gray-300 mt-1"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> ${prop.bairro}, ${prop.cidade}</p>
+                    </div>
+                    <button onclick="closePropertyModal()" class="text-gray-400 hover:text-white text-2xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="p-6 space-y-6">
+                    <div>
+                        <div class="h-96 w-full rounded-xl overflow-hidden bg-black mb-3 shadow-lg flex items-center justify-center">
+                            <img id="modal-main-img" src="${mainPhoto}" alt="${prop.titulo}" class="w-full h-full object-contain">
+                        </div>
+                        ${galleryHTML ? `<div class="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">${galleryHTML}</div>` : ''}
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 p-4 rounded-xl border border-gray-200">
+                        <div>
+                            <span class="text-xs font-bold text-gray-400 uppercase">Valor do Imóvel</span>
+                            <div class="text-3xl font-extrabold text-navy-900">${formattedPrice} ${prop.finalidade === 'Alugar' ? '<span class="text-xs font-normal">/ mês</span>' : ''}</div>
+                        </div>
+                        <a href="https://wa.me/5554996224511?text=Olá,%20gostaria%20de%20agendar%20uma%20visita%20para%20o%20imóvel:%20${encodeURIComponent(prop.titulo)}%20(Código%20${prop.id})" target="_blank" class="mt-3 sm:mt-0 gold-gradient text-navy-900 font-extrabold px-6 py-3 rounded-lg text-xs uppercase shadow flex items-center gap-2">
+                            <i class="fab fa-whatsapp text-base"></i> Agendar Visita via WhatsApp
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+                            <i class="fa-solid fa-bed text-gold-600 text-lg mb-1"></i>
+                            <span class="block text-xs font-bold text-gray-400 uppercase">Dormitórios</span>
+                            <span class="text-base font-extrabold text-navy-900">${prop.quartos} (${prop.suites} suítes)</span>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+                            <i class="fa-solid fa-bath text-gold-600 text-lg mb-1"></i>
+                            <span class="block text-xs font-bold text-gray-400 uppercase">Banheiros</span>
+                            <span class="text-base font-extrabold text-navy-900">${prop.banheiros}</span>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+                            <i class="fa-solid fa-car text-gold-600 text-lg mb-1"></i>
+                            <span class="block text-xs font-bold text-gray-400 uppercase">Vagas Garagem</span>
+                            <span class="text-base font-extrabold text-navy-900">${prop.vagas}</span>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
+                            <i class="fa-solid fa-ruler-combined text-gold-600 text-lg mb-1"></i>
+                            <span class="block text-xs font-bold text-gray-400 uppercase">Área Privativa</span>
+                            <span class="text-base font-extrabold text-navy-900">${prop.area} m²</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider mb-2">Descrição do Imóvel</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed whitespace-pre-line">${prop.descricao}</p>
+                    </div>
+
+                    ${prop.videoUrl ? `
+                        <div class="border-t border-gray-200 pt-4">
+                            <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider mb-2"><i class="fa-solid fa-video text-gold-600 mr-1"></i> Vídeo de Apresentação</h4>
+                            <div class="p-3 bg-gray-100 rounded-xl">
+                                <a href="${prop.videoUrl}" target="_blank" class="text-xs font-bold text-navy-900 hover:text-gold-600 flex items-center gap-2">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir vídeo em nova janela (${prop.videoUrl})
+                                </a>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            modal.classList.remove("hidden");
+        }
+
+        function switchModalMainPhoto(src) {
+            document.getElementById("modal-main-img").src = src;
+        }
+
+        function closePropertyModal() {
+            document.getElementById("modal-details").classList.add("hidden");
+        }
+
+        // MODAL LEAD DE CONTATO
+        function openModalLead(subject) {
+            document.getElementById("lead-subject").value = subject;
+            document.getElementById("lead-subtitle").innerText = "Referência: " + subject;
+            document.getElementById("modal-lead").classList.remove("hidden");
+        }
+
+        function closeModalLead() {
+            document.getElementById("modal-lead").classList.add("hidden");
+        }
+
+        function submitLeadForm(e) {
+            e.preventDefault();
+            const nome = document.getElementById("lead-nome").value;
+            const phone = document.getElementById("lead-phone").value;
+            const email = document.getElementById("lead-email").value;
+            const subject = document.getElementById("lead-subject").value;
+            const msg = document.getElementById("lead-msg").value;
+
+            const text = `*Novo Lead Aguinara Imóveis*\n\n*Assunto:* ${subject}\n*Nome:* ${nome}\n*Telefone:* ${phone}\n*E-mail:* ${email}\n*Mensagem:* ${msg}`;
+            window.open(`https://wa.me/5554996224511?text=${encodeURIComponent(text)}`, '_blank');
+
+            closeModalLead();
+            alert("Obrigado pelo contato! Redirecionando para o WhatsApp da Aguinara Imóveis.");
+        }
+
+        // AUTENTICAÇÃO E PAINEL ADMIN
+        function checkAdminAuth() {
+            if (isAdminLoggedIn) {
+                openModalAdmin();
+            } else {
+                document.getElementById("modal-login").classList.remove("hidden");
+            }
+        }
+
+        function closeModalLogin() {
+            document.getElementById("modal-login").classList.add("hidden");
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-user').value.trim();
+            const password = document.getElementById('login-pass').value;
+            const errorEl = document.getElementById('login-error');
+            errorEl.classList.add('hidden');
+            try {
+                if (!banco) throw new Error('Chave pública do Supabase ainda não configurada.');
+                const {error} = await banco.auth.signInWithPassword({email, password});
+                if (error) throw error;
+                isAdminLoggedIn = true;
+                const buttonText = document.getElementById('admin-btn-text');
+                if (buttonText) buttonText.innerText = 'Painel Ativo';
+                closeModalLogin();
+                openModalAdmin();
+            } catch (error) {
+                errorEl.textContent = 'Erro ao entrar: ' + error.message;
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        async function logoutAdmin() {
+            if (banco) await banco.auth.signOut();
+            isAdminLoggedIn = false;
+            const buttonText = document.getElementById('admin-btn-text');
+            if (buttonText) buttonText.innerText = 'Área Restrita';
+            closeModalAdmin();
+        }
+
+        function openModalAdmin() {
+            renderAdminTable();
+            document.getElementById("modal-admin").classList.remove("hidden");
+        }
+
+        function closeModalAdmin() {
+            document.getElementById("modal-admin").classList.add("hidden");
+        }
+
+        // UPLOAD DE IMAGENS LOCAL (BASE64)
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64Url = e.target.result;
+                    currentFormPhotos.push(base64Url);
+                    pendingPhotos.set(base64Url, file);
+                    renderFormPhotosPreview();
+                    updateAdminPreview();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            event.target.value = '';
+        }
+
+        function addPhotoFromUrl() {
+            const urlInput = document.getElementById("form-url-input");
+            const url = urlInput.value.trim();
+            if (url) {
+                currentFormPhotos.push(url);
+                urlInput.value = "";
+                renderFormPhotosPreview();
+                updateAdminPreview();
+            }
+        }
+
+        function removePhotoAt(index) {
+            currentFormPhotos.splice(index, 1);
+            renderFormPhotosPreview();
+            updateAdminPreview();
+        }
+
+        function clearAllPhotos() {
+            currentFormPhotos = [];
+            pendingPhotos.clear();
+            renderFormPhotosPreview();
+            updateAdminPreview();
+        }
+
+        function renderFormPhotosPreview() {
+            const container = document.getElementById("photos-preview-list");
+            const countLabel = document.getElementById("photo-count-label");
+            
+            if (countLabel) countLabel.innerText = currentFormPhotos.length;
+            if (!container) return;
+
+            container.innerHTML = "";
+            currentFormPhotos.forEach((src, index) => {
+                const div = document.createElement("div");
+                div.className = "relative group rounded-lg overflow-hidden border border-gray-300 bg-gray-100 aspect-square";
+                div.innerHTML = `
+                    <img src="${src}" class="w-full h-full object-cover">
+                    <button type="button" onclick="removePhotoAt(${index})" class="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shadow hover:bg-red-700 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    ${index === 0 ? '<span class="absolute bottom-0 left-0 right-0 bg-gold-500 text-navy-900 font-extrabold text-[8px] text-center uppercase py-0.5">Capa</span>' : ''}
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById("admin-table-body");
+            tbody.innerHTML = "";
+
+            properties.forEach(prop => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-gray-50 border-b border-gray-200";
+
+                const mainPhoto = (prop.fotos && prop.fotos.length > 0 && prop.fotos[0]) ? prop.fotos[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80';
+                const formattedPrice = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(prop.preco);
+
+                tr.innerHTML = `
+                    <td class="p-3">
+                        <img src="${mainPhoto}" alt="${prop.titulo}" class="w-16 h-12 object-cover rounded shadow-sm">
+                    </td>
+                    <td class="p-3">
+                        <div class="font-bold text-navy-900">${prop.titulo}</div>
+                        <div class="text-[11px] text-gray-500">${prop.bairro}</div>
+                    </td>
+                    <td class="p-3">
+                        <span class="font-bold">${prop.tipo}</span>
+                        <div class="text-[11px] text-gray-500">${prop.cidade}</div>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${prop.finalidade === 'Alugar' ? 'bg-blue-100 text-blue-800' : 'bg-gold-100 text-gold-800'}">${prop.finalidade}</span>
+                    </td>
+                    <td class="p-3 font-bold text-navy-900">${formattedPrice}</td>
+                    <td class="p-3 text-center">
+                        <div class="flex justify-center gap-2">
+                            <button onclick="editProperty('${prop.id}')" class="bg-navy-800 text-white p-1.5 rounded hover:bg-gold-500 hover:text-navy-900 transition" title="Editar">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteProperty('${prop.id}')" class="bg-red-600 text-white p-1.5 rounded hover:bg-red-700 transition" title="Excluir">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openFormNewProperty() {
+            document.getElementById("admin-form-title").innerText = "Cadastrar Novo Imóvel";
+            document.getElementById("property-form").reset();
+            document.getElementById("form-id").value = "";
+            currentFormPhotos = [];
+            pendingPhotos.clear();
+            renderFormPhotosPreview();
+            document.getElementById("admin-form-container").classList.remove("hidden");
+            updateAdminPreview();
+        }
+
+        function cancelAdminForm() {
+            document.getElementById("admin-form-container").classList.add("hidden");
+        }
+
+        function editProperty(id) {
+            const prop = properties.find(p => p.id === id.toString());
+            if (!prop) return;
+
+            document.getElementById("admin-form-title").innerText = "Editar Imóvel (Cód. " + prop.id + ")";
+            document.getElementById("form-id").value = prop.id;
+            document.getElementById("form-titulo").value = prop.titulo;
+            document.getElementById("form-finalidade").value = prop.finalidade;
+            document.getElementById("form-tipo").value = prop.tipo;
+            document.getElementById("form-preco").value = prop.preco;
+            document.getElementById("form-cidade").value = prop.cidade;
+            document.getElementById("form-bairro").value = prop.bairro;
+            document.getElementById("form-area").value = prop.area;
+            document.getElementById("form-quartos").value = prop.quartos;
+            document.getElementById("form-suites").value = prop.suites;
+            document.getElementById("form-banheiros").value = prop.banheiros;
+            document.getElementById("form-vagas").value = prop.vagas;
+            document.getElementById("form-descricao").value = prop.descricao;
+            document.getElementById("form-video-url").value = prop.videoUrl || "";
+
+            currentFormPhotos = prop.fotos ? [...prop.fotos] : [];
+            pendingPhotos.clear();
+            renderFormPhotosPreview();
+
+            document.getElementById("admin-form-container").classList.remove("hidden");
+            updateAdminPreview();
+        }
+
+        async function saveProperty(e) {
+            e.preventDefault();
+            if (savingProperty) return;
+            savingProperty = true;
+            const submit = document.querySelector('#property-form button[type="submit"]');
+            if (submit) submit.disabled = true;
+            try {
+                await requireAdmin();
+            const id = document.getElementById("form-id").value;
+            const titulo = document.getElementById("form-titulo").value;
+            const finalidade = document.getElementById("form-finalidade").value;
+            const tipo = document.getElementById("form-tipo").value;
+            const preco = parseFloat(document.getElementById("form-preco").value) || 0;
+            const cidade = document.getElementById("form-cidade").value;
+            const bairro = document.getElementById("form-bairro").value;
+            const area = parseInt(document.getElementById("form-area").value) || 0;
+            const quartos = parseInt(document.getElementById("form-quartos").value) || 0;
+            const suites = parseInt(document.getElementById("form-suites").value) || 0;
+            const banheiros = parseInt(document.getElementById("form-banheiros").value) || 0;
+            const vagas = parseInt(document.getElementById("form-vagas").value) || 0;
+            const descricao = document.getElementById("form-descricao").value;
+            const videoUrl = document.getElementById("form-video-url").value;
+
+                const savedId = id || crypto.randomUUID();
+                const fotos = [];
+                for (const photo of currentFormPhotos) fotos.push(await uploadPhoto(photo));
+                const prop = {id:savedId, titulo, finalidade, tipo, preco, cidade, bairro, area, quartos, suites, banheiros, vagas, descricao, fotos, videoUrl};
+                const { error } = await banco.from('imoveis').upsert({id:savedId,dados:prop}, {onConflict:'id'});
+                if (error) throw error;
+                pendingPhotos.clear();
+                await syncWithServer();
+                cancelAdminForm();
+                alert('Imóvel salvo no Supabase e disponível no catálogo!');
+            } catch (error) {
+                console.error(error);
+                alert('Não foi possível salvar o imóvel: ' + error.message);
+            } finally {
+                savingProperty = false;
+                if (submit) submit.disabled = false;
+            }
+        }
+
+        async function deleteProperty(id) {
+            if (!confirm('Tem certeza que deseja excluir este imóvel do catálogo?')) return;
+            try {
+                await requireAdmin();
+                const {error} = await banco.from('imoveis').delete().eq('id', String(id));
+                if (error) throw error;
+                await syncWithServer();
+                alert('Imóvel excluído do catálogo. As fotos permanecem no Storage para evitar perda acidental.');
+            } catch (error) {
+                alert('Erro ao excluir: ' + error.message);
+            }
+        }
+
+        // PRÉVIA EM TEMPO REAL NO PAINEL ADMINISTRATIVO
+        function updateAdminPreview() {
+            const previewCard = document.getElementById("admin-live-preview-card");
+            if (!previewCard) return;
+
+            const titulo = document.getElementById("form-titulo").value || "Título do Anúncio Exemplo";
+            const finalidade = document.getElementById("form-finalidade").value;
+            const tipo = document.getElementById("form-tipo").value;
+            const precoVal = parseFloat(document.getElementById("form-preco").value) || 0;
+            const cidade = document.getElementById("form-cidade").value;
+            const bairro = document.getElementById("form-bairro").value || "Nome do Bairro";
+            const area = parseInt(document.getElementById("form-area").value) || 0;
+            const quartos = parseInt(document.getElementById("form-quartos").value) || 0;
+            const suites = parseInt(document.getElementById("form-suites").value) || 0;
+            const vagas = parseInt(document.getElementById("form-vagas").value) || 0;
+
+            let mainPhoto = currentFormPhotos.length > 0 ? currentFormPhotos[0] : "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80";
+            let photoCount = currentFormPhotos.length;
+
+            const formattedPrice = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(precoVal);
+            const purposeBadge = finalidade === 'Alugar' ? 
+                '<span class="bg-blue-600 text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded">Locação</span>' :
+                '<span class="bg-gold-500 text-navy-900 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded">Venda</span>';
+
+            previewCard.innerHTML = `
+                <div class="relative overflow-hidden h-44 bg-gray-200">
+                    <img src="${mainPhoto}" alt="Prévia" class="w-full h-full object-cover">
+                    <div class="absolute top-2 left-2 flex gap-1.5">
+                        ${purposeBadge}
+                        <span class="bg-navy-900/80 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded">${tipo}</span>
+                    </div>
+                    ${photoCount > 0 ? `<span class="absolute bottom-2 right-2 bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full font-bold"><i class="fa-solid fa-camera mr-1"></i>${photoCount} fotos</span>` : ''}
+                </div>
+                <div class="p-3">
+                    <div class="text-[11px] font-bold text-gray-400 mb-0.5">
+                        <i class="fa-solid fa-location-dot text-gold-500 mr-1"></i>${bairro}, ${cidade}
+                    </div>
+                    <h5 class="font-heading font-extrabold text-navy-900 text-sm leading-snug line-clamp-2">${titulo}</h5>
+                    <div class="text-base font-black text-gold-600 my-1.5">
+                        ${formattedPrice} ${finalidade === 'Alugar' ? '<span class="text-[10px] text-gray-400 font-normal">/mês</span>' : ''}
+                    </div>
+                    <div class="grid grid-cols-4 gap-1 pt-2 border-t border-gray-100 text-center text-gray-600 text-[10px]">
+                        <div><i class="fa-solid fa-bed text-gold-500 block"></i>${quartos} qts</div>
+                        <div><i class="fa-solid fa-bath text-gold-500 block"></i>${suites} stes</div>
+                        <div><i class="fa-solid fa-car text-gold-500 block"></i>${vagas} vgs</div>
+                        <div><i class="fa-solid fa-ruler-combined text-gold-500 block"></i>${area}m²</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobile-menu");
+            menu.classList.toggle("hidden");
+        }
+    </script>
+</body>
+</html>

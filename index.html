@@ -1012,9 +1012,9 @@
             if (!file) throw new Error('Imagem pendente não encontrada; selecione-a novamente.');
             const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg';
             const name = `imoveis/${crypto.randomUUID()}.${ext}`;
-            const { error } = await banco.storage.from('fotos-imoveis').upload(name, file, {contentType: file.type, upsert: false});
+            const { error } = await banco.storage.from('foto-imoveis').upload(name, file, {contentType: file.type, upsert: false});
             if (error) throw error;
-            return banco.storage.from('fotos-imoveis').getPublicUrl(name).data.publicUrl;
+            return banco.storage.from('foto-imoveis').getPublicUrl(name).data.publicUrl;
         }
 
         async function requireAdmin() {

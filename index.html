@@ -315,7 +315,7 @@
         </div>
     </section>
 
-    <!-- SEÇÃO DE LANÇAMENTOS EXCLUSIVOS -->
+    <!-- SEÇÃO DE LANÇAMENTOS EXCLUSIVOS DINÂMICA -->
     <section id="lancamentos" class="py-16 bg-navy-900 text-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center max-w-2xl mx-auto mb-12">
@@ -324,47 +324,8 @@
                 <p class="text-gray-400 text-sm mt-2">Empreendimentos de alto padrão selecionados na Serra Gaúcha.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div class="relative group overflow-hidden rounded-2xl shadow-2xl">
-                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80" alt="Empreendimento Exclusivo Aguinara" class="w-full h-96 object-cover transform group-hover:scale-105 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"></div>
-                    <div class="absolute bottom-6 left-6 right-6">
-                        <span class="bg-gold-500 text-navy-900 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">Destaque Aguinara</span>
-                        <h3 class="font-heading text-2xl font-bold mt-2">Residencial Gran Valle</h3>
-                        <p class="text-gray-300 text-xs mt-1"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> Villagio Iguatemi, Caxias do Sul</p>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="bg-navy-800/80 p-6 rounded-xl border border-gray-700/50">
-                        <h4 class="font-heading font-bold text-lg text-gold-400 mb-2">Residencial Gran Valle — Caxias do Sul</h4>
-                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                            Apartamentos de 3 suítes com sacada gourmet, churrasqueira e infraestrutura de lazer completa no bairro Villagio Iguatemi.
-                        </p>
-                        <div class="grid grid-cols-3 gap-4 text-center border-t border-gray-700/60 pt-4 mb-6">
-                            <div>
-                                <span class="block font-bold text-lg text-white">180 a 260m²</span>
-                                <span class="text-[11px] text-gray-400 uppercase">Área Privativa</span>
-                            </div>
-                            <div>
-                                <span class="block font-bold text-lg text-white">3 e 4</span>
-                                <span class="text-[11px] text-gray-400 uppercase">Suítes</span>
-                            </div>
-                            <div>
-                                <span class="block font-bold text-lg text-white">3 a 4</span>
-                                <span class="text-[11px] text-gray-400 uppercase">Vagas</span>
-                            </div>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-3">
-                            <button onclick="openModalLead('Residencial Gran Valle')" class="gold-gradient text-navy-900 font-extrabold px-6 py-3 rounded-lg text-xs tracking-wider uppercase shadow hover:opacity-90 transition text-center">
-                                Solicitar Apresentação
-                            </button>
-                            <a href="https://wa.me/5554996224511?text=Olá,%20gostaria%20de%20informações%20sobre%20o%20Residencial%20Gran%20Valle" target="_blank" class="border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-navy-900 font-bold px-6 py-3 rounded-lg text-xs tracking-wider uppercase transition text-center flex items-center justify-center gap-2">
-                                <i class="fab fa-whatsapp text-sm"></i> WhatsApp Aguinara
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div id="featured-launch-container" class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <!-- Conteúdo renderizado via JavaScript -->
             </div>
         </div>
     </section>
@@ -635,7 +596,7 @@
         </div>
     </div>
 
-    <!-- PAINEL ADMINISTRATIVO COM SUPORTE A UPLOAD DE FOTOS/VÍDEOS, SERVIDOR E DOWNLOAD JSON -->
+    <!-- PAINEL ADMINISTRATIVO COM SUPORTE A UPLOAD DE FOTOS/VÍDEOS, SERVIDOR E EDITAR LANÇAMENTO -->
     <div id="modal-admin" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto shadow-2xl border border-gray-200">
             <div class="p-6 bg-navy-900 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sticky top-0 z-20">
@@ -643,11 +604,14 @@
                     <i class="fa-solid fa-sliders text-gold-400 text-xl"></i>
                     <div>
                         <h3 class="font-heading font-extrabold text-lg">Painel de Gestão de Imóveis</h3>
-                        <p class="text-xs text-gray-400">Gerenciar imóveis, fotos e vídeos com Supabase</p>
+                        <p class="text-xs text-gray-400">Gerenciar catálogo e destaque de Lançamento</p>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="toggleLaunchForm()" class="bg-gold-500 hover:bg-gold-600 text-navy-900 text-xs font-extrabold px-3 py-2 rounded-lg shadow flex items-center gap-1.5">
+                        <i class="fa-solid fa-star"></i> Editar Lançamento
+                    </button>
                     <button onclick="openFormNewProperty()" class="gold-gradient text-navy-900 text-xs font-extrabold px-3 py-2 rounded-lg shadow flex items-center gap-1.5">
                         <i class="fa-solid fa-plus"></i> Novo Imóvel
                     </button>
@@ -684,7 +648,90 @@
             </div>
 
             <div class="p-6">
-                <!-- FORMULÁRIO DE CADASTRO/EDIÇÃO COM PRÉVIA EM TEMPO REAL -->
+                <!-- FORMULÁRIO DE EDIÇÃO DO LANÇAMENTO EXCLUSIVO -->
+                <div id="admin-launch-form-container" class="hidden mb-8 p-6 bg-slate-100 rounded-xl border-2 border-gold-500/50 shadow-inner">
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-300">
+                        <h4 class="font-heading font-extrabold text-navy-900 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-star text-gold-500"></i> Configurar Seção Lançamento Exclusivo
+                        </h4>
+                        <button onclick="toggleLaunchForm()" class="text-xs text-gray-500 hover:text-red-600 font-bold">Cancelar / Fechar</button>
+                    </div>
+
+                    <form onsubmit="saveLaunchData(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Título do Lançamento</label>
+                                <input type="text" id="launch-titulo" required placeholder="Ex: Residencial Gran Valle" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Localização (Bairro, Cidade)</label>
+                                <input type="text" id="launch-localizacao" required placeholder="Ex: Villagio Iguatemi, Caxias do Sul" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Slogan / Tag (Ex: Destaque Aguinara)</label>
+                                <input type="text" id="launch-tag" required placeholder="Ex: Destaque Aguinara" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Título do Card Direito</label>
+                                <input type="text" id="launch-subtitulo" required placeholder="Ex: Residencial Gran Valle — Caxias do Sul" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Área Privativa</label>
+                                <input type="text" id="launch-area" required placeholder="Ex: 180 a 260m²" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Suítes / Dormitórios</label>
+                                <input type="text" id="launch-suites" required placeholder="Ex: 3 e 4" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Vagas de Garagem</label>
+                                <input type="text" id="launch-vagas" required placeholder="Ex: 3 a 4" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Descrição Comercial</label>
+                            <textarea id="launch-descricao" rows="2" required placeholder="Apartamentos de 3 suítes com sacada gourmet..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-gold-500 focus:outline-none"></textarea>
+                        </div>
+
+                        <!-- UPLOAD DE FOTO DO LANÇAMENTO -->
+                        <div class="border-t border-gray-300 pt-3">
+                            <label class="block text-xs font-bold text-navy-900 uppercase mb-2">
+                                <i class="fa-solid fa-image text-gold-500 mr-1"></i> Foto de Destaque do Lançamento
+                            </label>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                                <div class="p-3 bg-white border-2 border-dashed border-gray-300 rounded-xl text-center hover:border-gold-500 transition">
+                                    <input type="file" id="launch-file-input" accept="image/*" onchange="handleLaunchFileUpload(event)" class="hidden">
+                                    <label for="launch-file-input" class="cursor-pointer flex flex-col items-center justify-center gap-1">
+                                        <i class="fa-solid fa-cloud-arrow-up text-2xl text-gold-500"></i>
+                                        <span class="text-xs font-bold text-navy-900">Selecione uma Imagem do Computador</span>
+                                    </label>
+                                </div>
+                                <div>
+                                    <span class="block text-[11px] font-bold text-gray-500 mb-1">Ou informe a URL da Imagem:</span>
+                                    <input type="url" id="launch-foto-url" placeholder="https://exemplo.com/imagem.jpg" oninput="updateLaunchPreview(this.value)" class="w-full border border-gray-300 rounded-lg p-2 text-xs focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+                            </div>
+
+                            <div class="mt-3 flex items-center gap-3">
+                                <span class="text-xs font-bold text-gray-600">Prévia da Foto:</span>
+                                <img id="launch-photo-preview" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80" class="w-24 h-16 object-cover rounded-lg border border-gray-300 shadow">
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex gap-3">
+                            <button type="submit" class="gold-gradient text-navy-900 font-extrabold px-6 py-2.5 rounded-lg text-xs tracking-wider uppercase shadow hover:opacity-95 transition">
+                                Salvar Lançamento
+                            </button>
+                            <button type="button" onclick="toggleLaunchForm()" class="bg-gray-200 text-gray-700 font-bold px-4 py-2.5 rounded-lg text-xs hover:bg-gray-300 transition">
+                                Cancelar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- FORMULÁRIO DE CADASTRO/EDIÇÃO COM PRÉVIA EM TEMPO REAL DE IMÓVEIS -->
                 <div id="admin-form-container" class="hidden mb-8 p-6 bg-slate-50 rounded-xl border border-gray-300 shadow-inner">
                     <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-300">
                         <h4 id="admin-form-title" class="font-heading font-bold text-navy-900 text-base">Cadastrar Novo Imóvel</h4>
@@ -902,7 +949,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- LÓGICA JAVASCRIPT PRINCIPAL COM SUPABASE -->
     <script>
-        // BANCO DE DADOS INICIAL DE IMÓVEIS (FALLBACK SE NÃO HOUVER NO SERVIDOR/LOCAL)
+        // DADOS PADRÃO DO LANÇAMENTO DESTAQUE
+        let defaultLaunchData = {
+            titulo: "Residencial Gran Valle",
+            subtitulo: "Residencial Gran Valle — Caxias do Sul",
+            localizacao: "Villagio Iguatemi, Caxias do Sul",
+            tag: "Destaque Aguinara",
+            area: "180 a 260m²",
+            suites: "3 e 4",
+            vagas: "3 a 4",
+            descricao: "Apartamentos de 3 suítes com sacada gourmet, churrasqueira e infraestrutura de lazer completa no bairro Villagio Iguatemi.",
+            foto: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1000&q=80"
+        };
+        let currentLaunchData = { ...defaultLaunchData };
+        let pendingLaunchPhotoFile = null;
+
+        // BANCO DE DADOS INICIAL DE IMÓVEIS
         let INITIAL_PROPERTIES = [
             {
                 id: "1",
@@ -981,7 +1043,6 @@
             document.getElementById('about-logo-container').innerHTML = AGUINARA_EXACT_LOGO_SVG;
             document.getElementById('footer-logo-container').innerHTML = AGUINARA_EXACT_LOGO_SVG;
 
-            // Carrega imóveis (Primeiro tenta o Servidor / imoveis.json, depois localStorage)
             await syncWithServer();
             if (banco) {
                 const {data} = await banco.auth.getSession();
@@ -1002,27 +1063,164 @@
 
         async function syncWithServer() {
             if (!banco) {
-                updateStorageStatus('local', 'Configure a chave pública do Supabase no HTML antes de publicar.');
+                updateStorageStatus('local', 'Configure a chave pública do Supabase no HTML.');
                 properties = [];
                 renderPropertyGrid(properties);
+                renderFeaturedLaunch();
                 return;
             }
-            updateStorageStatus('checking', 'Buscando catálogo no Supabase...');
+            updateStorageStatus('checking', 'Buscando catálogo e lançamento no Supabase...');
+            
+            // Busca imóveis
             const { data, error } = await banco.from('imoveis').select('id,dados').order('criado_em', { ascending: false });
-            if (error) {
-                console.error('Supabase: falha ao buscar imóveis', error);
-                updateStorageStatus('local', 'Erro ao conectar ao catálogo: ' + error.message);
-                return;
+            if (!error && data) {
+                properties = data.map(row => ({ ...row.dados, id: String(row.id) }));
             }
-            properties = data.map(row => ({ ...row.dados, id: String(row.id) }));
+
+            // Busca lançamento
+            const { data: launchRes, error: launchErr } = await banco.from('imoveis').select('dados').eq('id', 'featured_launch').single();
+            if (!launchErr && launchRes && launchRes.dados) {
+                currentLaunchData = launchRes.dados;
+            } else {
+                currentLaunchData = { ...defaultLaunchData };
+            }
+
             isServerConnected = true;
             updateStorageStatus('success', `Supabase conectado • ${properties.length} imóveis`);
             renderPropertyGrid(properties);
+            renderFeaturedLaunch();
             if (isAdminLoggedIn) renderAdminTable();
         }
 
-        async function savePropertiesToStorage() {
-            await syncWithServer();
+        // RENDERIZA A SEÇÃO DE LANÇAMENTOS
+        function renderFeaturedLaunch() {
+            const container = document.getElementById("featured-launch-container");
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="relative group overflow-hidden rounded-2xl shadow-2xl">
+                    <img src="${currentLaunchData.foto}" alt="${currentLaunchData.titulo}" class="w-full h-96 object-cover transform group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <span class="bg-gold-500 text-navy-900 text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full">${currentLaunchData.tag}</span>
+                        <h3 class="font-heading text-2xl font-bold mt-2">${currentLaunchData.titulo}</h3>
+                        <p class="text-gray-300 text-xs mt-1"><i class="fa-solid fa-location-dot text-gold-400 mr-1"></i> ${currentLaunchData.localizacao}</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-navy-800/80 p-6 rounded-xl border border-gray-700/50">
+                        <h4 class="font-heading font-bold text-lg text-gold-400 mb-2">${currentLaunchData.subtitulo}</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            ${currentLaunchData.descricao}
+                        </p>
+                        <div class="grid grid-cols-3 gap-4 text-center border-t border-gray-700/60 pt-4 mb-6">
+                            <div>
+                                <span class="block font-bold text-lg text-white">${currentLaunchData.area}</span>
+                                <span class="text-[11px] text-gray-400 uppercase">Área Privativa</span>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-lg text-white">${currentLaunchData.suites}</span>
+                                <span class="text-[11px] text-gray-400 uppercase">Suítes</span>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-lg text-white">${currentLaunchData.vagas}</span>
+                                <span class="text-[11px] text-gray-400 uppercase">Vagas</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button onclick="openModalLead('${currentLaunchData.titulo}')" class="gold-gradient text-navy-900 font-extrabold px-6 py-3 rounded-lg text-xs tracking-wider uppercase shadow hover:opacity-90 transition text-center">
+                                Solicitar Apresentação
+                            </button>
+                            <a href="https://wa.me/5554996224511?text=Olá,%20gostaria%20de%20informações%20sobre%20o%20${encodeURIComponent(currentLaunchData.titulo)}" target="_blank" class="border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-navy-900 font-bold px-6 py-3 rounded-lg text-xs tracking-wider uppercase transition text-center flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-sm"></i> WhatsApp Aguinara
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // EDICAO E SALVAMENTO DO LANÇAMENTO
+        function toggleLaunchForm() {
+            const container = document.getElementById("admin-launch-form-container");
+            if (container.classList.contains("hidden")) {
+                document.getElementById("launch-titulo").value = currentLaunchData.titulo;
+                document.getElementById("launch-subtitulo").value = currentLaunchData.subtitulo;
+                document.getElementById("launch-localizacao").value = currentLaunchData.localizacao;
+                document.getElementById("launch-tag").value = currentLaunchData.tag;
+                document.getElementById("launch-area").value = currentLaunchData.area;
+                document.getElementById("launch-suites").value = currentLaunchData.suites;
+                document.getElementById("launch-vagas").value = currentLaunchData.vagas;
+                document.getElementById("launch-descricao").value = currentLaunchData.descricao;
+                document.getElementById("launch-foto-url").value = currentLaunchData.foto.startsWith("data:") ? "" : currentLaunchData.foto;
+                document.getElementById("launch-photo-preview").src = currentLaunchData.foto;
+                pendingLaunchPhotoFile = null;
+                container.classList.remove("hidden");
+            } else {
+                container.classList.add("hidden");
+            }
+        }
+
+        function handleLaunchFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            pendingLaunchPhotoFile = file;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("launch-photo-preview").src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateLaunchPreview(url) {
+            if (url && url.trim() !== "") {
+                document.getElementById("launch-photo-preview").src = url;
+            }
+        }
+
+        async function saveLaunchData(e) {
+            e.preventDefault();
+            try {
+                await requireAdmin();
+                updateStorageStatus('checking', 'Salvando lançamento...');
+
+                let fotoUrl = document.getElementById("launch-foto-url").value.trim();
+                
+                if (pendingLaunchPhotoFile) {
+                    const ext = pendingLaunchPhotoFile.name.split('.').pop() || 'jpg';
+                    const fileName = `launch_${crypto.randomUUID()}.${ext}`;
+                    const { error: uploadErr } = await banco.storage.from('foto-imoveis').upload(fileName, pendingLaunchPhotoFile, { contentType: pendingLaunchPhotoFile.type, upsert: true });
+                    if (uploadErr) throw uploadErr;
+                    fotoUrl = banco.storage.from('foto-imoveis').getPublicUrl(fileName).data.publicUrl;
+                } else if (!fotoUrl) {
+                    fotoUrl = currentLaunchData.foto;
+                }
+
+                const updatedLaunch = {
+                    titulo: document.getElementById("launch-titulo").value,
+                    subtitulo: document.getElementById("launch-subtitulo").value,
+                    localizacao: document.getElementById("launch-localizacao").value,
+                    tag: document.getElementById("launch-tag").value,
+                    area: document.getElementById("launch-area").value,
+                    suites: document.getElementById("launch-suites").value,
+                    vagas: document.getElementById("launch-vagas").value,
+                    descricao: document.getElementById("launch-descricao").value,
+                    foto: fotoUrl
+                };
+
+                const { error } = await banco.from('imoveis').upsert({ id: 'featured_launch', dados: updatedLaunch }, { onConflict: 'id' });
+                if (error) throw error;
+
+                currentLaunchData = updatedLaunch;
+                renderFeaturedLaunch();
+                toggleLaunchForm();
+                updateStorageStatus('success', 'Lançamento atualizado com sucesso!');
+                alert('Área de Lançamentos Exclusivos atualizada!');
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao salvar lançamento: ' + err.message);
+            }
         }
 
         async function uploadPhoto(photo) {
@@ -1042,7 +1240,6 @@
             return banco.storage.from('foto-imoveis').getPublicUrl(name).data.publicUrl;
         }
 
-        // NOVO: UPLOAD DE VÍDEO
         async function uploadVideo(videoFile) {
             if (!videoFile) return "";
             const ext = videoFile.name.split('.').pop() || 'mp4';
@@ -1052,7 +1249,6 @@
                 upsert: false
             });
             if (error) {
-                // Tenta fallback para o bucket 'foto-imoveis' caso 'video-imoveis' não exista
                 const fallbackName = `videos/${crypto.randomUUID()}.${ext}`;
                 const { error: fallbackErr } = await banco.storage.from('foto-imoveis').upload(fallbackName, videoFile, {
                     contentType: videoFile.type || 'video/mp4',
@@ -1090,9 +1286,12 @@
             }
         }
 
-        // EXPORTAR E IMPORTAR ARQUIVO JSON DO SERVIDOR
         function exportJSON() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(properties, null, 2));
+            const exportData = {
+                imoveis: properties,
+                lancamento: currentLaunchData
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportData, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
             downloadAnchor.setAttribute("download", "imoveis.json");
@@ -1107,11 +1306,12 @@
             try {
                 await requireAdmin();
                 const imported = JSON.parse(await file.text());
-                if (!Array.isArray(imported)) throw new Error('O JSON deve conter uma lista de imóveis.');
-                if (!confirm(`Importar ${imported.length} imóveis? IDs existentes serão atualizados, sem apagar outros cadastros. Faça uma cópia de segurança primeiro.`)) return;
+                const items = Array.isArray(imported) ? imported : (imported.imoveis || []);
+                if (!Array.isArray(items)) throw new Error('O JSON deve conter uma lista de imóveis.');
+                if (!confirm(`Importar ${items.length} imóveis? IDs existentes serão atualizados.`)) return;
                 updateStorageStatus('checking', 'Importando catálogo...');
                 let count = 0;
-                for (const original of imported) {
+                for (const original of items) {
                     const prop = {...original, id: String(original.id || crypto.randomUUID())};
                     if (!prop.titulo) throw new Error('Imóvel sem título no arquivo.');
                     prop.fotos = await Promise.all((prop.fotos || []).map(uploadPhoto));
@@ -1119,16 +1319,20 @@
                     if (error) throw error;
                     count++;
                 }
+
+                if (imported.lancamento) {
+                    await banco.from('imoveis').upsert({id:'featured_launch', dados: imported.lancamento}, {onConflict:'id'});
+                }
+
                 await syncWithServer();
-                alert(`${count} imóveis importados para o Supabase. Confira o catálogo.`);
+                alert(`${count} imóveis importados para o Supabase.`);
             } catch (error) {
                 console.error(error);
-                alert('Falha na importação: ' + error.message + '. Alguns itens podem ter sido importados; confira o catálogo.');
+                alert('Falha na importação: ' + error.message);
                 await syncWithServer();
             } finally {event.target.value = '';}
         }
 
-        // ALTERAR TAB COMPRAR / ALUGAR
         function switchSearchTab(tab) {
             currentSearchTab = tab;
             const btnComprar = document.getElementById("tab-comprar");
@@ -1153,7 +1357,6 @@
             document.getElementById("price-display").innerText = formatted;
         }
 
-        // RENDERIZAR GRID DE IMÓVEIS NO SITE
         function renderPropertyGrid(items) {
             const grid = document.getElementById("property-grid");
             const noResults = document.getElementById("no-results");
@@ -1166,6 +1369,8 @@
             noResults.classList.add("hidden");
 
             items.forEach(prop => {
+                if (prop.id === 'featured_launch') return; // ignora registro de lançamento no catálogo padrão
+
                 const card = document.createElement("div");
                 card.className = "bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition duration-300 flex flex-col group";
 
@@ -1241,7 +1446,6 @@
             });
         }
 
-        // BUSCA E FILTRAGEM
         function executeSearch() {
             const tipo = document.getElementById("filter-tipo").value;
             const cidade = document.getElementById("filter-cidade").value;
@@ -1249,6 +1453,7 @@
             const precoMax = parseFloat(document.getElementById("filter-preco").value);
 
             const filtered = properties.filter(p => {
+                if (p.id === 'featured_launch') return false;
                 if (currentSearchTab === "comprar" && p.finalidade !== "Comprar") return false;
                 if (currentSearchTab === "alugar" && p.finalidade !== "Alugar") return false;
                 if (tipo !== "todos" && p.tipo !== tipo) return false;
@@ -1276,7 +1481,7 @@
             if (cat === "todos") {
                 renderPropertyGrid(properties);
             } else {
-                const filtered = properties.filter(p => p.tipo === cat);
+                const filtered = properties.filter(p => p.id !== 'featured_launch' && p.tipo === cat);
                 renderPropertyGrid(filtered);
             }
         }
@@ -1295,7 +1500,6 @@
             renderPropertyGrid(properties);
         }
 
-        // SIMULADOR DE FINANCIAMENTO S.A.C.
         function calcularFinanciamento() {
             const valorTotal = parseFloat(document.getElementById("sim-valor").value) || 0;
             const entrada = parseFloat(document.getElementById("sim-entrada").value) || 0;
@@ -1315,7 +1519,6 @@
             document.getElementById("sim-total-meses").innerText = totalMeses + " meses";
         }
 
-        // HELPER PARA FORMATAR URL DO YOUTUBE PARA EMBED
         function getYouTubeEmbedUrl(url) {
             if (!url) return null;
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -1323,7 +1526,6 @@
             return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
         }
 
-        // MODAL DETALHES DO IMÓVEL (PÚBLICO)
         function openPropertyModal(id) {
             const prop = properties.find(p => p.id === id.toString());
             if (!prop) return;
@@ -1342,7 +1544,6 @@
                 `;
             });
 
-            // GERAÇÃO DO PLAYER DE VÍDEO
             let videoPlayerHTML = '';
             if (prop.videoUrl && prop.videoUrl.trim() !== "") {
                 const ytEmbed = getYouTubeEmbedUrl(prop.videoUrl);
@@ -1358,7 +1559,6 @@
                         </div>
                     `;
                 } else {
-                    // Vídeo direto (MP4/WEBM/Supabase Storage)
                     videoPlayerHTML = `
                         <div class="border-t border-gray-200 pt-4">
                             <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
@@ -1449,7 +1649,6 @@
             document.getElementById("modal-details").classList.add("hidden");
         }
 
-        // MODAL LEAD DE CONTATO
         function openModalLead(subject) {
             document.getElementById("lead-subject").value = subject;
             document.getElementById("lead-subtitle").innerText = "Referência: " + subject;
@@ -1475,7 +1674,6 @@
             alert("Obrigado pelo contato! Redirecionando para o WhatsApp da Aguinara Imóveis.");
         }
 
-        // AUTENTICAÇÃO E PAINEL ADMIN
         function checkAdminAuth() {
             if (isAdminLoggedIn) {
                 openModalAdmin();
@@ -1526,7 +1724,6 @@
             document.getElementById("modal-admin").classList.add("hidden");
         }
 
-        // UPLOAD DE IMAGENS LOCAL (BASE64)
         function handleFileUpload(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
@@ -1548,7 +1745,6 @@
             event.target.value = '';
         }
 
-        // UPLOAD DE ARQUIVO DE VÍDEO
         function handleVideoUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -1623,6 +1819,8 @@
             tbody.innerHTML = "";
 
             properties.forEach(prop => {
+                if (prop.id === 'featured_launch') return;
+
                 const tr = document.createElement("tr");
                 tr.className = "hover:bg-gray-50 border-b border-gray-200";
 
@@ -1731,13 +1929,11 @@
 
                 const savedId = id || crypto.randomUUID();
 
-                // Upload de vídeos novos se selecionado
                 if (pendingVideoFile) {
                     updateStorageStatus('checking', 'Enviando arquivo de vídeo...');
                     videoUrl = await uploadVideo(pendingVideoFile);
                 }
 
-                // Upload das fotos
                 const fotos = [];
                 for (const photo of currentFormPhotos) fotos.push(await uploadPhoto(photo));
                 
@@ -1766,13 +1962,12 @@
                 const {error} = await banco.from('imoveis').delete().eq('id', String(id));
                 if (error) throw error;
                 await syncWithServer();
-                alert('Imóvel excluído do catálogo. As fotos e vídeos permanecem no Storage para evitar perda acidental.');
+                alert('Imóvel excluído do catálogo.');
             } catch (error) {
                 alert('Erro ao excluir: ' + error.message);
             }
         }
 
-        // PRÉVIA EM TEMPO REAL NO PAINEL ADMINISTRATIVO
         function updateAdminPreview() {
             const previewCard = document.getElementById("admin-live-preview-card");
             if (!previewCard) return;

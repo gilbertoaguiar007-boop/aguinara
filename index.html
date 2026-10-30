@@ -1575,6 +1575,10 @@
                 }
             }
 
+            // Exibe a informação de suítes apenas se a quantidade for maior que 0
+            const numSuites = parseInt(prop.suites) || 0;
+            const suitesText = numSuites > 0 ? ` (${numSuites} ${numSuites === 1 ? 'suíte' : 'suítes'})` : '';
+
             content.innerHTML = `
                 <div class="relative bg-navy-900 text-white p-6 rounded-t-2xl flex justify-between items-start">
                     <div>
@@ -1610,7 +1614,7 @@
                         <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
                             <i class="fa-solid fa-bed text-gold-600 text-lg mb-1"></i>
                             <span class="block text-xs font-bold text-gray-400 uppercase">Dormitórios</span>
-                            <span class="text-base font-extrabold text-navy-900">${prop.quartos} (${prop.suites} suítes)</span>
+                            <span class="text-base font-extrabold text-navy-900">${prop.quartos}${suitesText}</span>
                         </div>
                         <div class="bg-gray-50 p-3 rounded-xl border border-gray-200">
                             <i class="fa-solid fa-bath text-gold-600 text-lg mb-1"></i>

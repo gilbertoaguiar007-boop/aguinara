@@ -330,14 +330,24 @@
         </div>
     </section>
 
-    <!-- SIMULADOR DE FINANCIAMENTO S.A.C. -->
+    <!-- SIMULADOR DE FINANCIAMENTO S.A.C. E PRICE -->
     <section id="simulador" class="py-16 bg-slate-100">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-200">
                 <div class="text-center mb-8">
                     <span class="text-gold-600 font-bold text-xs uppercase tracking-widest">Ferramenta Financeira</span>
                     <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-navy-900 mt-1">Simulador de Financiamento</h2>
-                    <p class="text-gray-500 text-xs sm:text-sm mt-1">Estime o valor da sua primeira parcela pelo método S.A.C.</p>
+                    <p id="sim-subtitulo-sistema" class="text-gray-500 text-xs sm:text-sm mt-1">Estime o valor da parcela escolhendo entre o sistema S.A.C. ou PRICE.</p>
+                    
+                    <!-- BOTÕES DE SELEÇÃO DE SISTEMA DE AMORTIZAÇÃO -->
+                    <div class="flex justify-center items-center gap-3 mt-4">
+                        <button id="btn-sistema-sac" onclick="setSistemaAmortizacao('SAC')" class="px-5 py-2 rounded-lg font-bold text-xs tracking-wider uppercase transition-all gold-gradient text-navy-900 shadow">
+                            Sistema S.A.C. (Decrescente)
+                        </button>
+                        <button id="btn-sistema-price" onclick="setSistemaAmortizacao('PRICE')" class="px-5 py-2 rounded-lg font-bold text-xs tracking-wider uppercase transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">
+                            Tabela Price (Fixa)
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -370,9 +380,9 @@
 
                     <div class="bg-navy-900 text-white rounded-xl p-6 text-center flex flex-col justify-between h-full border-t-4 border-gold-500 shadow-lg">
                         <div>
-                            <span class="text-xs uppercase tracking-widest text-gray-400 font-bold">1ª Parcela Estimada</span>
+                            <span id="sim-label-parcela" class="text-xs uppercase tracking-widest text-gray-400 font-bold">1ª Parcela Estimada</span>
                             <div id="sim-resultado" class="text-3xl sm:text-4xl font-extrabold gold-text my-3">R$ 0,00</div>
-                            <p class="text-gray-400 text-xs">Amortização Sistema S.A.C.</p>
+                            <p id="sim-desc-amortizacao" class="text-gray-400 text-xs">Amortização Sistema S.A.C.</p>
                         </div>
 
                         <div class="border-t border-gray-800 pt-4 mt-6 text-xs text-gray-300 space-y-1">
@@ -1036,6 +1046,7 @@
         let currentFormPhotos = [];
         let pendingVideoFile = null;
         let isServerConnected = false;
+        let sistemaAmortizacao = "SAC"; // 'SAC' ou 'PRICE'
 
         // INICIALIZAÇÃO
         document.addEventListener("DOMContentLoaded", async function() {
@@ -1500,6 +1511,31 @@
             renderPropertyGrid(properties);
         }
 
+        function setSistemaAmortizacao(sistema) {
+            sistemaAmortizacao = sistema;
+            const btnSac = document.getElementById("btn-sistema-sac");
+            const btnPrice = document.getElementById("btn-sistema-price");
+            const labelParcela = document.getElementById("sim-label-parcela");
+            const descAmortizacao = document.getElementById("sim-desc-amortizacao");
+            const subtituloSistema = document.getElementById("sim-subtitulo-sistema");
+
+            if (sistema === 'SAC') {
+                btnSac.className = "px-5 py-2 rounded-lg font-bold text-xs tracking-wider uppercase transition-all gold-gradient text-navy-900 shadow";
+                btnPrice.className = "px-5 py-2 rounded-lg font-bold text-xs tracking-wider uppercase transition-all bg-gray-100 text-gray-600 hover:bg-gray-200";
+                labelParcela.innerText = "1ª Parcela Estimada";
+                descAmortizacao.innerText = "Amortização Sistema S.A.C.";
+                subtituloSistema.innerText = "Estime o valor da sua primeira parcela pelo método S.A.C.";
+            } else {
+                btnPrice.className = "px-5 py-2 rounded-lg font-bold text-xs tracking-wider uppercase transition-all gold-gradient text-navy-900 shadow";
+                btnSac.className = "px-5 py-2 rounded-lg font-bold text-xs tracking-wider uppercase transition-all bg-gray-100 text-gray-600 hover:bg-gray-200";
+                labelParcela.innerText = "Parcela Fixa Estimada";
+                descAmortizacao.innerText = "Amortização Tabela PRICE";
+                subtituloSistema.innerText = "Estime o valor de todas as parcelas fixas pela Tabela PRICE.";
+            }
+
+            calcularFinanciamento();
+        }
+
         function calcularFinanciamento() {
             const valorTotal = parseFloat(document.getElementById("sim-valor").value) || 0;
             const entrada = parseFloat(document.getElementById("sim-entrada").value) || 0;
@@ -1510,11 +1546,23 @@
             const totalMeses = prazoAnos * 12;
             const taxaJurosMensal = (taxaJurosAnual / 100) / 12;
 
-            const amortizacaoMensal = totalMeses > 0 ? valorFinanciado / totalMeses : 0;
-            const jurosPrimeiroMes = valorFinanciado * taxaJurosMensal;
-            const primeiraParcela = amortizacaoMensal + jurosPrimeiroMes;
+            let parcela = 0;
 
-            document.getElementById("sim-resultado").innerText = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(primeiraParcela);
+            if (sistemaAmortizacao === 'SAC') {
+                const amortizacaoMensal = totalMeses > 0 ? valorFinanciado / totalMeses : 0;
+                const jurosPrimeiroMes = valorFinanciado * taxaJurosMensal;
+                parcela = amortizacaoMensal + jurosPrimeiroMes;
+            } else {
+                // Tabela Price: PMT = PV * [i * (1 + i)^n] / [(1 + i)^n - 1]
+                if (totalMeses > 0 && taxaJurosMensal > 0) {
+                    const fator = Math.pow(1 + taxaJurosMensal, totalMeses);
+                    parcela = valorFinanciado * ((taxaJurosMensal * fator) / (fator - 1));
+                } else if (totalMeses > 0) {
+                    parcela = valorFinanciado / totalMeses;
+                }
+            }
+
+            document.getElementById("sim-resultado").innerText = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(parcela);
             document.getElementById("sim-valor-financiado").innerText = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valorFinanciado);
             document.getElementById("sim-total-meses").innerText = totalMeses + " meses";
         }
@@ -1671,7 +1719,13 @@
             const subject = document.getElementById("lead-subject").value;
             const msg = document.getElementById("lead-msg").value;
 
-            const text = `*Novo Lead Aguinara Imóveis*\n\n*Assunto:* ${subject}\n*Nome:* ${nome}\n*Telefone:* ${phone}\n*E-mail:* ${email}\n*Mensagem:* ${msg}`;
+            const text = `*Novo Lead Aguinara Imóveis*
+
+*Assunto:* ${subject}
+*Nome:* ${nome}
+*Telefone:* ${phone}
+*E-mail:* ${email}
+*Mensagem:* ${msg}`;
             window.open(`https://wa.me/5554996224511?text=${encodeURIComponent(text)}`, '_blank');
 
             closeModalLead();

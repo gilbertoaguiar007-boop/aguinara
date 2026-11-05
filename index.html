@@ -753,6 +753,7 @@
                         <!-- COLUNA ESQUERDA: FORMULÁRIO (7 colunas) -->
                         <form id="property-form" onsubmit="saveProperty(event)" class="lg:col-span-7 space-y-4">
                             <input type="hidden" id="form-id">
+                            <input type="hidden" id="form-ordem" value="0">
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="sm:col-span-2">
@@ -782,6 +783,11 @@
                                 <div>
                                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Valor do Imóvel (R$)</label>
                                     <input type="number" id="form-preco" required oninput="updateAdminPreview()" placeholder="850000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Ordem de Exibição (Menor = Primeiro)</label>
+                                    <input type="number" id="form-ordem-input" value="0" step="1" oninput="updateAdminPreview()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
                                 </div>
 
                                 <div>
@@ -933,11 +939,15 @@
 
                 <!-- TABELA DE IMÓVEIS -->
                 <div>
-                    <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider mb-3">Imóveis Cadastrados</h4>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
+                        <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider">Imóveis Cadastrados</h4>
+                        <span class="text-[11px] text-gray-500 italic"><i class="fa-solid fa-arrow-up-down mr-1"></i> Utilize os botões ▲ e ▼ para reordenar a exibição no site.</span>
+                    </div>
                     <div class="overflow-x-auto border border-gray-200 rounded-xl">
                         <table class="w-full text-left border-collapse text-xs">
                             <thead>
                                 <tr class="bg-navy-900 text-white font-bold uppercase tracking-wider">
+                                    <th class="p-3 text-center">Ordem</th>
                                     <th class="p-3">Foto Principal</th>
                                     <th class="p-3">Título / Bairro</th>
                                     <th class="p-3">Tipo / Cidade</th>
@@ -974,70 +984,6 @@
         let currentLaunchData = { ...defaultLaunchData };
         let pendingLaunchPhotoFile = null;
 
-        // BANCO DE DADOS INICIAL DE IMÓVEIS
-        let INITIAL_PROPERTIES = [
-            {
-                id: "1",
-                titulo: "Casa de Alto Padrão no Bairro Exposição",
-                finalidade: "Comprar",
-                tipo: "Casa",
-                preco: 1850000,
-                cidade: "Caxias do Sul",
-                bairro: "Exposição",
-                area: 320,
-                quartos: 4,
-                suites: 2,
-                banheiros: 4,
-                vagas: 3,
-                descricao: "Residência fantástica com finíssimo acabamento, amplo quintal, espaço gourmet com churrasqueira, piso aquecido e localização nobre próximo ao Parque dos Macacos.",
-                fotos: [
-                    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80"
-                ],
-                videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            },
-            {
-                id: "2",
-                titulo: "Apartamento 3 Suítes no Villagio Iguatemi",
-                finalidade: "Comprar",
-                tipo: "Apartamento",
-                preco: 980000,
-                cidade: "Caxias do Sul",
-                bairro: "Villagio Iguatemi",
-                area: 165,
-                quartos: 3,
-                suites: 3,
-                banheiros: 4,
-                vagas: 2,
-                descricao: "Apartamento seminovo com vista panorâmica, sacada integrada, esquadrias com isolamento acústico e prédio com infraestrutura de clube completa.",
-                fotos: [
-                    "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80"
-                ],
-                videoUrl: ""
-            },
-            {
-                id: "3",
-                titulo: "Cobertura Duplex no Centro de Bento Gonçalves",
-                finalidade: "Comprar",
-                tipo: "Cobertura",
-                preco: 1450000,
-                cidade: "Bento Gonçalves",
-                bairro: "Centro",
-                area: 280,
-                quartos: 3,
-                suites: 2,
-                banheiros: 3,
-                vagas: 3,
-                descricao: "Exclusiva cobertura com terraço privativo, jacuzzi, lareira e vista incrível para a Capital do Vinho. Excelente orientação solar.",
-                fotos: [
-                    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
-                ],
-                videoUrl: ""
-            }
-        ];
-
         // VARIÁVEIS DE ESTADO
         let properties = [];
         let currentSearchTab = "comprar";
@@ -1072,6 +1018,14 @@
         let pendingPhotos = new Map();
         let savingProperty = false;
 
+        function sortProperties(list) {
+            return list.sort((a, b) => {
+                const ordemA = typeof a.ordem === 'number' ? a.ordem : 0;
+                const ordemB = typeof b.ordem === 'number' ? b.ordem : 0;
+                return ordemA - ordemB;
+            });
+        }
+
         async function syncWithServer() {
             if (!banco) {
                 updateStorageStatus('local', 'Configure a chave pública do Supabase no HTML.');
@@ -1086,6 +1040,7 @@
             const { data, error } = await banco.from('imoveis').select('id,dados').order('criado_em', { ascending: false });
             if (!error && data) {
                 properties = data.map(row => ({ ...row.dados, id: String(row.id) }));
+                sortProperties(properties);
             }
 
             // Busca lançamento
@@ -1379,7 +1334,10 @@
             }
             noResults.classList.add("hidden");
 
-            items.forEach(prop => {
+            // Ordena os itens pela propriedade ordem antes de renderizar
+            const listToRender = sortProperties([...items]);
+
+            listToRender.forEach(prop => {
                 if (prop.id === 'featured_launch') return; // ignora registro de lançamento no catálogo padrão
 
                 const card = document.createElement("div");
@@ -1876,7 +1834,9 @@
             const tbody = document.getElementById("admin-table-body");
             tbody.innerHTML = "";
 
-            properties.forEach(prop => {
+            sortProperties(properties);
+
+            properties.forEach((prop, index) => {
                 if (prop.id === 'featured_launch') return;
 
                 const tr = document.createElement("tr");
@@ -1884,8 +1844,24 @@
 
                 const mainPhoto = (prop.fotos && prop.fotos.length > 0 && prop.fotos[0]) ? prop.fotos[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80';
                 const formattedPrice = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(prop.preco);
+                const currentOrdem = typeof prop.ordem === 'number' ? prop.ordem : index;
 
                 tr.innerHTML = `
+                    <td class="p-3 text-center">
+                        <div class="flex flex-col items-center justify-center gap-1">
+                            <div class="flex gap-1">
+                                <button onclick="movePropertyOrder('${prop.id}', 'up')" class="bg-gray-200 hover:bg-gold-500 hover:text-navy-900 text-gray-700 w-6 h-6 rounded flex items-center justify-center font-bold text-xs transition ${index === 0 ? 'opacity-40 cursor-not-allowed' : ''}" ${index === 0 ? 'disabled' : ''} title="Mover para Cima">
+                                    ▲
+                                </button>
+                                <button onclick="movePropertyOrder('${prop.id}', 'down')" class="bg-gray-200 hover:bg-gold-500 hover:text-navy-900 text-gray-700 w-6 h-6 rounded flex items-center justify-center font-bold text-xs transition ${index === properties.length - 1 ? 'opacity-40 cursor-not-allowed' : ''}" ${index === properties.length - 1 ? 'disabled' : ''} title="Mover para Baixo">
+                                    ▼
+                                </button>
+                            </div>
+                            <span class="bg-navy-900 text-gold-400 font-extrabold text-[10px] px-2 py-0.5 rounded-full" title="Posição exata no catálogo">
+                                #${index + 1} (${currentOrdem})
+                            </span>
+                        </div>
+                    </td>
                     <td class="p-3">
                         <img src="${mainPhoto}" alt="${prop.titulo}" class="w-16 h-12 object-cover rounded shadow-sm">
                     </td>
@@ -1916,10 +1892,50 @@
             });
         }
 
+        async function movePropertyOrder(id, direction) {
+            sortProperties(properties);
+            const index = properties.findIndex(p => p.id === String(id));
+            if (index === -1) return;
+
+            const targetIndex = direction === 'up' ? index - 1 : index + 1;
+            if (targetIndex < 0 || targetIndex >= properties.length) return;
+
+            // Troca a posição dos itens
+            const temp = properties[index];
+            properties[index] = properties[targetIndex];
+            properties[targetIndex] = temp;
+
+            // Reatribui o número sequencial da ordem para manter limpo
+            properties.forEach((p, idx) => {
+                p.ordem = idx;
+            });
+
+            // Atualiza visualmente primeiro
+            renderAdminTable();
+            renderPropertyGrid(properties);
+
+            // Salva as alterações de ordem no Supabase se logado
+            if (banco && isAdminLoggedIn) {
+                updateStorageStatus('checking', 'Atualizando ordem dos anúncios no Supabase...');
+                try {
+                    await requireAdmin();
+                    for (const p of [properties[index], properties[targetIndex]]) {
+                        await banco.from('imoveis').upsert({ id: p.id, dados: p }, { onConflict: 'id' });
+                    }
+                    updateStorageStatus('success', 'Ordem dos anúncios salva com sucesso!');
+                } catch (err) {
+                    console.error("Erro ao salvar ordem no banco:", err);
+                    alert("Erro ao reordenar anúncios no servidor: " + err.message);
+                }
+            }
+        }
+
         function openFormNewProperty() {
             document.getElementById("admin-form-title").innerText = "Cadastrar Novo Imóvel";
             document.getElementById("property-form").reset();
             document.getElementById("form-id").value = "";
+            const nextOrdem = properties.length;
+            document.getElementById("form-ordem-input").value = nextOrdem;
             currentFormPhotos = [];
             pendingPhotos.clear();
             clearVideoFile();
@@ -1943,6 +1959,7 @@
             document.getElementById("form-finalidade").value = prop.finalidade;
             document.getElementById("form-tipo").value = prop.tipo;
             document.getElementById("form-preco").value = prop.preco;
+            document.getElementById("form-ordem-input").value = typeof prop.ordem === 'number' ? prop.ordem : 0;
             document.getElementById("form-cidade").value = prop.cidade;
             document.getElementById("form-bairro").value = prop.bairro;
             document.getElementById("form-area").value = prop.area;
@@ -1975,6 +1992,7 @@
                 const finalidade = document.getElementById("form-finalidade").value;
                 const tipo = document.getElementById("form-tipo").value;
                 const preco = parseFloat(document.getElementById("form-preco").value) || 0;
+                const ordem = parseInt(document.getElementById("form-ordem-input").value) || 0;
                 const cidade = document.getElementById("form-cidade").value;
                 const bairro = document.getElementById("form-bairro").value;
                 const area = parseInt(document.getElementById("form-area").value) || 0;
@@ -1995,7 +2013,7 @@
                 const fotos = [];
                 for (const photo of currentFormPhotos) fotos.push(await uploadPhoto(photo));
                 
-                const prop = {id:savedId, titulo, finalidade, tipo, preco, cidade, bairro, area, quartos, suites, banheiros, vagas, descricao, fotos, videoUrl};
+                const prop = {id:savedId, titulo, finalidade, tipo, preco, ordem, cidade, bairro, area, quartos, suites, banheiros, vagas, descricao, fotos, videoUrl};
                 const { error } = await banco.from('imoveis').upsert({id:savedId,dados:prop}, {onConflict:'id'});
                 if (error) throw error;
                 
@@ -2088,3 +2106,5 @@
     </script>
 </body>
 </html>
+index.html
+Exibindo index.html.

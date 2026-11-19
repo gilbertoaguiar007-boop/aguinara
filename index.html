@@ -910,6 +910,59 @@
                                 </div>
                             </div>
 
+                            <!-- TARJA / MARCA D'ÁGUA SOBRE AS FOTOS DO ANÚNCIO -->
+                            <div class="border-t border-gray-300 pt-3 space-y-3 bg-white p-3.5 rounded-xl border border-gray-200">
+                                <div class="flex items-center justify-between">
+                                    <label class="block text-xs font-bold text-navy-900 uppercase">
+                                        <i class="fa-solid fa-stamp text-gold-500 mr-1"></i> Tarja / Marca d'Água nas Fotos
+                                    </label>
+                                    <span class="text-[10px] text-gray-400">Exibida sobre as fotos do anúncio</span>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-gray-600 uppercase mb-1">Texto da Tarja</label>
+                                        <select id="form-tarja-tipo" onchange="onTarjaTipoChange()" class="w-full border border-gray-300 rounded-lg p-2 text-xs font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                            <option value="nenhuma">Sem tarja</option>
+                                            <option value="VENDIDO">Vendido</option>
+                                            <option value="ALUGADO">Alugado</option>
+                                            <option value="OUTRO">Outro texto (digitar)...</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-gray-600 uppercase mb-1">Cor da Tarja</label>
+                                        <select id="form-tarja-cor" onchange="updateAdminPreview()" class="w-full border border-gray-300 rounded-lg p-2 text-xs font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                            <option value="red">Vermelho (Vendido)</option>
+                                            <option value="blue">Azul (Alugado)</option>
+                                            <option value="gold">Dourado Aguinara</option>
+                                            <option value="dark">Preto / Dourado</option>
+                                            <option value="green">Verde</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div id="form-tarja-custom-wrapper" class="hidden">
+                                    <label class="block text-[11px] font-bold text-gray-600 uppercase mb-1">Digite o Texto Personalizado da Tarja</label>
+                                    <input type="text" id="form-tarja-texto" maxlength="32" oninput="updateAdminPreview()" placeholder="Ex: RESERVADO, EXCLUSIVO, NOVO PREÇO..." class="w-full border border-gray-300 rounded-lg p-2 text-xs font-bold uppercase text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                </div>
+
+                                <div>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="block text-[11px] font-bold text-gray-600 uppercase">
+                                            Tamanho da Tarja: <span id="tarja-tamanho-label" class="text-gold-600 font-extrabold">100%</span>
+                                        </label>
+                                        <div class="flex items-center gap-1">
+                                            <button type="button" onclick="setTarjaTamanho(75)" class="px-2 py-0.5 text-[10px] font-bold rounded bg-gray-100 hover:bg-gold-500 hover:text-navy-900 text-gray-700 transition">P</button>
+                                            <button type="button" onclick="setTarjaTamanho(100)" class="px-2 py-0.5 text-[10px] font-bold rounded bg-gray-100 hover:bg-gold-500 hover:text-navy-900 text-gray-700 transition">M</button>
+                                            <button type="button" onclick="setTarjaTamanho(130)" class="px-2 py-0.5 text-[10px] font-bold rounded bg-gray-100 hover:bg-gold-500 hover:text-navy-900 text-gray-700 transition">G</button>
+                                            <button type="button" onclick="setTarjaTamanho(160)" class="px-2 py-0.5 text-[10px] font-bold rounded bg-gray-100 hover:bg-gold-500 hover:text-navy-900 text-gray-700 transition">GG</button>
+                                        </div>
+                                    </div>
+                                    <input type="range" id="form-tarja-tamanho" min="40" max="180" step="5" value="100" oninput="onTarjaTamanhoChange(this.value)" class="w-full accent-gold-500 cursor-pointer">
+                                </div>
+                            </div>
+
                             <div class="pt-2 flex gap-3">
                                 <button type="submit" class="gold-gradient text-navy-900 font-extrabold px-6 py-2.5 rounded-lg text-xs tracking-wider uppercase shadow hover:opacity-95 transition">
                                     Salvar Imóvel
@@ -1356,11 +1409,12 @@
                 card.innerHTML = `
                     <div class="relative overflow-hidden h-56 bg-gray-200 cursor-pointer" onclick="openPropertyModal('${prop.id}')">
                         <img src="${mainPhoto}" alt="${prop.titulo}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                        <div class="absolute top-3 left-3 flex gap-2">
+                        ${getTarjaOverlayHTML(prop, 'card')}
+                        <div class="absolute top-3 left-3 flex gap-2 z-20">
                             ${purposeBadge}
                             <span class="bg-navy-900/80 text-white text-[10px] font-bold uppercase px-2.5 py-1 rounded-md backdrop-blur-sm">${prop.tipo}</span>
                         </div>
-                        <div class="absolute bottom-3 right-3 flex items-center gap-1.5">
+                        <div class="absolute bottom-3 right-3 flex items-center gap-1.5 z-20">
                             ${hasVideo ? '<span class="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow"><i class="fa-solid fa-play mr-1"></i>Vídeo</span>' : ''}
                             ${totalPhotos > 1 ? `<span class="bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full font-bold backdrop-blur-sm"><i class="fa-solid fa-camera mr-1"></i>${totalPhotos} fotos</span>` : ''}
                         </div>
@@ -1600,8 +1654,9 @@
 
                 <div class="p-6 space-y-6">
                     <div>
-                        <div class="h-96 w-full rounded-xl overflow-hidden bg-black mb-3 shadow-lg flex items-center justify-center">
+                        <div class="relative h-96 w-full rounded-xl overflow-hidden bg-black mb-3 shadow-lg flex items-center justify-center">
                             <img id="modal-main-img" src="${mainPhoto}" alt="${prop.titulo}" class="w-full h-full object-contain">
+                            ${getTarjaOverlayHTML(prop, 'modal')}
                         </div>
                         ${galleryHTML ? `<div class="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">${galleryHTML}</div>` : ''}
                     </div>
@@ -1866,7 +1921,10 @@
                         <img src="${mainPhoto}" alt="${prop.titulo}" class="w-16 h-12 object-cover rounded shadow-sm">
                     </td>
                     <td class="p-3">
-                        <div class="font-bold text-navy-900">${prop.titulo}</div>
+                        <div class="font-bold text-navy-900 flex flex-wrap items-center gap-1.5">
+                            <span>${prop.titulo}</span>
+                            ${(prop.tarjaTipo && prop.tarjaTipo !== 'nenhuma' && prop.tarjaTexto) ? `<span class="bg-red-100 text-red-800 border border-red-200 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded">${escapeHtml(prop.tarjaTexto)}</span>` : ''}
+                        </div>
                         <div class="text-[11px] text-gray-500">${prop.bairro}</div>
                     </td>
                     <td class="p-3">
@@ -1930,12 +1988,97 @@
             }
         }
 
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function getTarjaOverlayHTML(prop, context = 'card') {
+            const tipo = prop.tarjaTipo || 'nenhuma';
+            if (tipo === 'nenhuma') return '';
+
+            let texto = '';
+            if (tipo === 'VENDIDO') texto = 'VENDIDO';
+            else if (tipo === 'ALUGADO') texto = 'ALUGADO';
+            else if (tipo === 'OUTRO') texto = (prop.tarjaTexto || '').trim();
+
+            if (!texto) return '';
+
+            const tamanhoPct = Math.min(180, Math.max(40, parseInt(prop.tarjaTamanho) || 100));
+            const scale = tamanhoPct / 100;
+            const contextFactor = context === 'modal' ? 1.45 : (context === 'preview' ? 0.82 : 1.0);
+            const fontSizePx = (18 * scale * contextFactor).toFixed(1);
+            const padYpx = (6 * scale * contextFactor).toFixed(1);
+            const borderPx = Math.max(1, Math.round(2 * scale * contextFactor));
+
+            const cor = prop.tarjaCor || (tipo === 'ALUGADO' ? 'blue' : (tipo === 'OUTRO' ? 'gold' : 'red'));
+            const colorStyles = {
+                red: 'background: rgba(220, 38, 38, 0.84); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.65);',
+                blue: 'background: rgba(37, 99, 235, 0.84); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.65);',
+                gold: 'background: rgba(216, 175, 72, 0.88); color: #0F1D2A; border-color: rgba(15, 29, 42, 0.55);',
+                dark: 'background: rgba(15, 29, 42, 0.85); color: #F7E298; border-color: rgba(230, 194, 91, 0.65);',
+                green: 'background: rgba(5, 150, 105, 0.84); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.65);'
+            };
+            const chosenStyle = colorStyles[cor] || colorStyles.red;
+
+            return `
+                <div class="pointer-events-none select-none absolute inset-0 overflow-hidden z-10 flex items-center justify-center">
+                    <div style="${chosenStyle} font-size: ${fontSizePx}px; padding: ${padYpx}px 24px; border-top-width: ${borderPx}px; border-bottom-width: ${borderPx}px; width: 145%; transform: rotate(-15deg); letter-spacing: 0.18em; box-shadow: 0 6px 20px rgba(0,0,0,0.45); backdrop-filter: blur(1px);"
+                         class="font-heading font-black uppercase text-center leading-tight whitespace-nowrap">
+                        ${escapeHtml(texto)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function onTarjaTipoChange() {
+            const tipo = document.getElementById("form-tarja-tipo").value;
+            const customWrapper = document.getElementById("form-tarja-custom-wrapper");
+            const corSelect = document.getElementById("form-tarja-cor");
+
+            if (tipo === "OUTRO") {
+                customWrapper.classList.remove("hidden");
+                setTimeout(() => document.getElementById("form-tarja-texto").focus(), 50);
+            } else {
+                customWrapper.classList.add("hidden");
+            }
+
+            if (tipo === "VENDIDO") corSelect.value = "red";
+            else if (tipo === "ALUGADO") corSelect.value = "blue";
+            else if (tipo === "OUTRO") corSelect.value = "gold";
+
+            updateAdminPreview();
+        }
+
+        function onTarjaTamanhoChange(val) {
+            const label = document.getElementById("tarja-tamanho-label");
+            if (label) label.innerText = val + "%";
+            updateAdminPreview();
+        }
+
+        function setTarjaTamanho(val) {
+            const slider = document.getElementById("form-tarja-tamanho");
+            if (slider) slider.value = val;
+            onTarjaTamanhoChange(val);
+        }
+
         function openFormNewProperty() {
             document.getElementById("admin-form-title").innerText = "Cadastrar Novo Imóvel";
             document.getElementById("property-form").reset();
             document.getElementById("form-id").value = "";
             const nextOrdem = properties.length;
             document.getElementById("form-ordem-input").value = nextOrdem;
+            document.getElementById("form-tarja-tipo").value = "nenhuma";
+            document.getElementById("form-tarja-cor").value = "red";
+            document.getElementById("form-tarja-texto").value = "";
+            document.getElementById("form-tarja-tamanho").value = 100;
+            document.getElementById("tarja-tamanho-label").innerText = "100%";
+            document.getElementById("form-tarja-custom-wrapper").classList.add("hidden");
             currentFormPhotos = [];
             pendingPhotos.clear();
             clearVideoFile();
@@ -1970,6 +2113,20 @@
             document.getElementById("form-descricao").value = prop.descricao;
             document.getElementById("form-video-url").value = prop.videoUrl || "";
 
+            const tarjaTipo = prop.tarjaTipo || "nenhuma";
+            const tarjaTamanho = prop.tarjaTamanho || 100;
+            const tarjaCor = prop.tarjaCor || (tarjaTipo === 'ALUGADO' ? 'blue' : (tarjaTipo === 'OUTRO' ? 'gold' : 'red'));
+            document.getElementById("form-tarja-tipo").value = tarjaTipo;
+            document.getElementById("form-tarja-cor").value = tarjaCor;
+            document.getElementById("form-tarja-texto").value = prop.tarjaTexto || "";
+            document.getElementById("form-tarja-tamanho").value = tarjaTamanho;
+            document.getElementById("tarja-tamanho-label").innerText = tarjaTamanho + "%";
+            if (tarjaTipo === "OUTRO") {
+                document.getElementById("form-tarja-custom-wrapper").classList.remove("hidden");
+            } else {
+                document.getElementById("form-tarja-custom-wrapper").classList.add("hidden");
+            }
+
             currentFormPhotos = prop.fotos ? [...prop.fotos] : [];
             pendingPhotos.clear();
             clearVideoFile();
@@ -2003,6 +2160,14 @@
                 const descricao = document.getElementById("form-descricao").value;
                 let videoUrl = document.getElementById("form-video-url").value;
 
+                const tarjaTipo = document.getElementById("form-tarja-tipo").value;
+                const tarjaCor = document.getElementById("form-tarja-cor").value;
+                const tarjaTamanho = parseInt(document.getElementById("form-tarja-tamanho").value) || 100;
+                let tarjaTexto = "";
+                if (tarjaTipo === "VENDIDO") tarjaTexto = "VENDIDO";
+                else if (tarjaTipo === "ALUGADO") tarjaTexto = "ALUGADO";
+                else if (tarjaTipo === "OUTRO") tarjaTexto = document.getElementById("form-tarja-texto").value.trim();
+
                 const savedId = id || crypto.randomUUID();
 
                 if (pendingVideoFile) {
@@ -2013,7 +2178,7 @@
                 const fotos = [];
                 for (const photo of currentFormPhotos) fotos.push(await uploadPhoto(photo));
                 
-                const prop = {id:savedId, titulo, finalidade, tipo, preco, ordem, cidade, bairro, area, quartos, suites, banheiros, vagas, descricao, fotos, videoUrl};
+                const prop = {id:savedId, titulo, finalidade, tipo, preco, ordem, cidade, bairro, area, quartos, suites, banheiros, vagas, descricao, fotos, videoUrl, tarjaTipo, tarjaTexto, tarjaTamanho, tarjaCor};
                 const { error } = await banco.from('imoveis').upsert({id:savedId,dados:prop}, {onConflict:'id'});
                 if (error) throw error;
                 
@@ -2060,6 +2225,11 @@
             const vagas = parseInt(document.getElementById("form-vagas").value) || 0;
             const videoUrlInput = document.getElementById("form-video-url").value;
 
+            const tarjaTipo = document.getElementById("form-tarja-tipo") ? document.getElementById("form-tarja-tipo").value : "nenhuma";
+            const tarjaTexto = document.getElementById("form-tarja-texto") ? document.getElementById("form-tarja-texto").value : "";
+            const tarjaTamanho = document.getElementById("form-tarja-tamanho") ? parseInt(document.getElementById("form-tarja-tamanho").value) || 100 : 100;
+            const tarjaCor = document.getElementById("form-tarja-cor") ? document.getElementById("form-tarja-cor").value : "red";
+
             let mainPhoto = currentFormPhotos.length > 0 ? currentFormPhotos[0] : "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80";
             let photoCount = currentFormPhotos.length;
             let hasVideo = pendingVideoFile || (videoUrlInput && videoUrlInput.trim() !== "");
@@ -2072,11 +2242,12 @@
             previewCard.innerHTML = `
                 <div class="relative overflow-hidden h-44 bg-gray-200">
                     <img src="${mainPhoto}" alt="Prévia" class="w-full h-full object-cover">
-                    <div class="absolute top-2 left-2 flex gap-1.5">
+                    ${getTarjaOverlayHTML({ tarjaTipo, tarjaTexto, tarjaTamanho, tarjaCor }, 'preview')}
+                    <div class="absolute top-2 left-2 flex gap-1.5 z-20">
                         ${purposeBadge}
                         <span class="bg-navy-900/80 text-white text-[9px] font-bold uppercase px-2 py-0.5 rounded">${tipo}</span>
                     </div>
-                    <div class="absolute bottom-2 right-2 flex items-center gap-1">
+                    <div class="absolute bottom-2 right-2 flex items-center gap-1 z-20">
                         ${hasVideo ? '<span class="bg-red-600 text-white text-[9px] px-2 py-0.5 rounded-full font-bold"><i class="fa-solid fa-play mr-1"></i>Vídeo</span>' : ''}
                         ${photoCount > 0 ? `<span class="bg-black/60 text-white text-[9px] px-2 py-0.5 rounded-full font-bold"><i class="fa-solid fa-camera mr-1"></i>${photoCount} fotos</span>` : ''}
                     </div>

@@ -791,6 +791,14 @@
                                 </div>
 
                                 <div>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Visibilidade no Site</label>
+                                    <select id="form-oculto" onchange="updateAdminPreview()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
+                                        <option value="false">Visível (Publicado no site)</option>
+                                        <option value="true">Oculto (Pausado / Não exibir)</option>
+                                    </select>
+                                </div>
+
+                                <div>
                                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Cidade</label>
                                     <select id="form-cidade" onchange="updateAdminPreview()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm font-semibold text-navy-900 focus:ring-2 focus:ring-gold-500 focus:outline-none">
                                         <option value="Caxias do Sul">Caxias do Sul</option>
@@ -992,9 +1000,16 @@
 
                 <!-- TABELA DE IMÓVEIS -->
                 <div>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 gap-2">
-                        <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider">Imóveis Cadastrados</h4>
-                        <span class="text-[11px] text-gray-500 italic"><i class="fa-solid fa-arrow-up-down mr-1"></i> Utilize os botões ▲ e ▼ para reordenar a exibição no site.</span>
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 gap-2">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h4 class="font-heading font-bold text-navy-900 text-sm uppercase tracking-wider">Imóveis Cadastrados</h4>
+                            <div class="flex items-center gap-1.5 ml-1">
+                                <button type="button" onclick="setAdminTableFilter('todos')" id="admin-filter-todos" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-navy-900 text-white transition">Todos (0)</button>
+                                <button type="button" onclick="setAdminTableFilter('visiveis')" id="admin-filter-visiveis" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">Visíveis (0)</button>
+                                <button type="button" onclick="setAdminTableFilter('ocultos')" id="admin-filter-ocultos" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition">Ocultos (0)</button>
+                            </div>
+                        </div>
+                        <span class="text-[11px] text-gray-500 italic"><i class="fa-solid fa-eye-slash mr-1"></i> Use o botão Ocultar/Exibir para pausar anúncios sem excluí-los.</span>
                     </div>
                     <div class="overflow-x-auto border border-gray-200 rounded-xl">
                         <table class="w-full text-left border-collapse text-xs">
@@ -1046,6 +1061,7 @@
         let pendingVideoFile = null;
         let isServerConnected = false;
         let sistemaAmortizacao = "SAC"; // 'SAC' ou 'PRICE'
+        let adminTableFilter = "todos"; // 'todos' | 'visiveis' | 'ocultos'
 
         // INICIALIZAÇÃO
         document.addEventListener("DOMContentLoaded", async function() {
@@ -1105,7 +1121,7 @@
             }
 
             isServerConnected = true;
-            updateStorageStatus('success', `Supabase conectado • ${properties.length} imóveis`);
+            updateCatalogStatusSummary();
             renderPropertyGrid(properties);
             renderFeaturedLaunch();
             if (isAdminLoggedIn) renderAdminTable();
@@ -1376,22 +1392,31 @@
             document.getElementById("price-display").innerText = formatted;
         }
 
+        function updateCatalogStatusSummary() {
+            const catalogItems = properties.filter(p => p.id !== 'featured_launch');
+            const visibleCount = catalogItems.filter(p => !p.oculto).length;
+            const hiddenCount = catalogItems.filter(p => Boolean(p.oculto)).length;
+            const hiddenSuffix = hiddenCount > 0 ? ` (${hiddenCount} ${hiddenCount === 1 ? 'oculto' : 'ocultos'})` : '';
+            updateStorageStatus('success', `Supabase conectado • ${visibleCount} ${visibleCount === 1 ? 'imóvel visível' : 'imóveis visíveis'}${hiddenSuffix}`);
+        }
+
         function renderPropertyGrid(items) {
             const grid = document.getElementById("property-grid");
             const noResults = document.getElementById("no-results");
             grid.innerHTML = "";
 
-            if (!items || items.length === 0) {
+            const visibleItems = (items || []).filter(p => p.id !== 'featured_launch' && !p.oculto);
+
+            if (visibleItems.length === 0) {
                 noResults.classList.remove("hidden");
                 return;
             }
             noResults.classList.add("hidden");
 
             // Ordena os itens pela propriedade ordem antes de renderizar
-            const listToRender = sortProperties([...items]);
+            const listToRender = sortProperties([...visibleItems]);
 
             listToRender.forEach(prop => {
-                if (prop.id === 'featured_launch') return; // ignora registro de lançamento no catálogo padrão
 
                 const card = document.createElement("div");
                 card.className = "bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition duration-300 flex flex-col group";
@@ -1476,7 +1501,7 @@
             const precoMax = parseFloat(document.getElementById("filter-preco").value);
 
             const filtered = properties.filter(p => {
-                if (p.id === 'featured_launch') return false;
+                if (p.id === 'featured_launch' || p.oculto) return false;
                 if (currentSearchTab === "comprar" && p.finalidade !== "Comprar") return false;
                 if (currentSearchTab === "alugar" && p.finalidade !== "Alugar") return false;
                 if (tipo !== "todos" && p.tipo !== tipo) return false;
@@ -1504,7 +1529,7 @@
             if (cat === "todos") {
                 renderPropertyGrid(properties);
             } else {
-                const filtered = properties.filter(p => p.id !== 'featured_launch' && p.tipo === cat);
+                const filtered = properties.filter(p => p.id !== 'featured_launch' && !p.oculto && p.tipo === cat);
                 renderPropertyGrid(filtered);
             }
         }
@@ -1885,21 +1910,69 @@
             });
         }
 
+        function setAdminTableFilter(filter) {
+            adminTableFilter = filter;
+            renderAdminTable();
+        }
+
         function renderAdminTable() {
             const tbody = document.getElementById("admin-table-body");
             tbody.innerHTML = "";
 
             sortProperties(properties);
 
+            const catalogItems = properties.filter(p => p.id !== 'featured_launch');
+            const totalCount = catalogItems.length;
+            const visibleCount = catalogItems.filter(p => !p.oculto).length;
+            const hiddenCount = catalogItems.filter(p => Boolean(p.oculto)).length;
+
+            const btnTodos = document.getElementById("admin-filter-todos");
+            const btnVisiveis = document.getElementById("admin-filter-visiveis");
+            const btnOcultos = document.getElementById("admin-filter-ocultos");
+            if (btnTodos && btnVisiveis && btnOcultos) {
+                btnTodos.innerText = `Todos (${totalCount})`;
+                btnVisiveis.innerText = `Visíveis (${visibleCount})`;
+                btnOcultos.innerText = `Ocultos (${hiddenCount})`;
+
+                btnTodos.className = adminTableFilter === 'todos'
+                    ? "px-2.5 py-1 rounded-full text-[11px] font-bold bg-navy-900 text-white transition"
+                    : "px-2.5 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition";
+                btnVisiveis.className = adminTableFilter === 'visiveis'
+                    ? "px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-600 text-white transition"
+                    : "px-2.5 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition";
+                btnOcultos.className = adminTableFilter === 'ocultos'
+                    ? "px-2.5 py-1 rounded-full text-[11px] font-bold bg-gray-700 text-white transition"
+                    : "px-2.5 py-1 rounded-full text-[11px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition";
+            }
+
+            let renderedRows = 0;
+
             properties.forEach((prop, index) => {
                 if (prop.id === 'featured_launch') return;
 
+                const isOculto = Boolean(prop.oculto);
+                if (adminTableFilter === 'visiveis' && isOculto) return;
+                if (adminTableFilter === 'ocultos' && !isOculto) return;
+
+                renderedRows++;
                 const tr = document.createElement("tr");
-                tr.className = "hover:bg-gray-50 border-b border-gray-200";
+                tr.className = isOculto
+                    ? "bg-gray-100/90 hover:bg-gray-100 border-b border-gray-200"
+                    : "hover:bg-gray-50 border-b border-gray-200";
 
                 const mainPhoto = (prop.fotos && prop.fotos.length > 0 && prop.fotos[0]) ? prop.fotos[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80';
                 const formattedPrice = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(prop.preco);
                 const currentOrdem = typeof prop.ordem === 'number' ? prop.ordem : index;
+
+                const visibilityButton = isOculto
+                    ? `<button onclick="togglePropertyVisibility('${prop.id}')" class="bg-emerald-600 text-white px-2 py-1.5 rounded hover:bg-emerald-700 transition inline-flex items-center gap-1 text-[11px] font-bold" title="Reexibir anúncio no site">
+                           <i class="fa-solid fa-eye"></i>
+                           <span class="hidden xl:inline">Exibir</span>
+                       </button>`
+                    : `<button onclick="togglePropertyVisibility('${prop.id}')" class="bg-amber-500 text-navy-900 px-2 py-1.5 rounded hover:bg-amber-600 transition inline-flex items-center gap-1 text-[11px] font-bold" title="Ocultar anúncio sem excluir">
+                           <i class="fa-solid fa-eye-slash"></i>
+                           <span class="hidden xl:inline">Ocultar</span>
+                       </button>`;
 
                 tr.innerHTML = `
                     <td class="p-3 text-center">
@@ -1918,11 +1991,15 @@
                         </div>
                     </td>
                     <td class="p-3">
-                        <img src="${mainPhoto}" alt="${prop.titulo}" class="w-16 h-12 object-cover rounded shadow-sm">
+                        <div class="relative w-16 h-12">
+                            <img src="${mainPhoto}" alt="${prop.titulo}" class="w-16 h-12 object-cover rounded shadow-sm ${isOculto ? 'opacity-50 grayscale' : ''}">
+                            ${isOculto ? '<span class="absolute inset-0 flex items-center justify-center bg-black/40 rounded text-white text-xs"><i class="fa-solid fa-eye-slash"></i></span>' : ''}
+                        </div>
                     </td>
                     <td class="p-3">
-                        <div class="font-bold text-navy-900 flex flex-wrap items-center gap-1.5">
+                        <div class="font-bold ${isOculto ? 'text-gray-500' : 'text-navy-900'} flex flex-wrap items-center gap-1.5">
                             <span>${prop.titulo}</span>
+                            ${isOculto ? '<span class="bg-gray-700 text-white text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded inline-flex items-center gap-1"><i class="fa-solid fa-eye-slash"></i> Oculto</span>' : ''}
                             ${(prop.tarjaTipo && prop.tarjaTipo !== 'nenhuma' && prop.tarjaTexto) ? `<span class="bg-red-100 text-red-800 border border-red-200 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded">${escapeHtml(prop.tarjaTexto)}</span>` : ''}
                         </div>
                         <div class="text-[11px] text-gray-500">${prop.bairro}</div>
@@ -1934,9 +2011,10 @@
                     <td class="p-3">
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${prop.finalidade === 'Alugar' ? 'bg-blue-100 text-blue-800' : 'bg-gold-100 text-gold-800'}">${prop.finalidade}</span>
                     </td>
-                    <td class="p-3 font-bold text-navy-900">${formattedPrice}</td>
+                    <td class="p-3 font-bold ${isOculto ? 'text-gray-500' : 'text-navy-900'}">${formattedPrice}</td>
                     <td class="p-3 text-center">
-                        <div class="flex justify-center gap-2">
+                        <div class="flex justify-center items-center gap-1.5">
+                            ${visibilityButton}
                             <button onclick="editProperty('${prop.id}')" class="bg-navy-800 text-white p-1.5 rounded hover:bg-gold-500 hover:text-navy-900 transition" title="Editar">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </button>
@@ -1948,6 +2026,40 @@
                 `;
                 tbody.appendChild(tr);
             });
+
+            if (renderedRows === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="p-6 text-center text-gray-400 text-xs">
+                            Nenhum imóvel encontrado neste filtro.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        async function togglePropertyVisibility(id) {
+            const prop = properties.find(p => p.id === String(id));
+            if (!prop) return;
+
+            try {
+                await requireAdmin();
+                const newOcultoState = !Boolean(prop.oculto);
+                const updatedProp = { ...prop, oculto: newOcultoState };
+
+                updateStorageStatus('checking', newOcultoState ? 'Ocultando anúncio...' : 'Reexibindo anúncio...');
+                const { error } = await banco.from('imoveis').upsert({ id: updatedProp.id, dados: updatedProp }, { onConflict: 'id' });
+                if (error) throw error;
+
+                prop.oculto = newOcultoState;
+                renderAdminTable();
+                renderPropertyGrid(properties);
+                updateCatalogStatusSummary();
+            } catch (error) {
+                console.error(error);
+                alert('Erro ao alterar visibilidade do anúncio: ' + error.message);
+                await syncWithServer();
+            }
         }
 
         async function movePropertyOrder(id, direction) {
@@ -2073,6 +2185,7 @@
             document.getElementById("form-id").value = "";
             const nextOrdem = properties.length;
             document.getElementById("form-ordem-input").value = nextOrdem;
+            document.getElementById("form-oculto").value = "false";
             document.getElementById("form-tarja-tipo").value = "nenhuma";
             document.getElementById("form-tarja-cor").value = "red";
             document.getElementById("form-tarja-texto").value = "";
@@ -2103,6 +2216,7 @@
             document.getElementById("form-tipo").value = prop.tipo;
             document.getElementById("form-preco").value = prop.preco;
             document.getElementById("form-ordem-input").value = typeof prop.ordem === 'number' ? prop.ordem : 0;
+            document.getElementById("form-oculto").value = prop.oculto ? "true" : "false";
             document.getElementById("form-cidade").value = prop.cidade;
             document.getElementById("form-bairro").value = prop.bairro;
             document.getElementById("form-area").value = prop.area;
@@ -2150,6 +2264,7 @@
                 const tipo = document.getElementById("form-tipo").value;
                 const preco = parseFloat(document.getElementById("form-preco").value) || 0;
                 const ordem = parseInt(document.getElementById("form-ordem-input").value) || 0;
+                const oculto = document.getElementById("form-oculto").value === "true";
                 const cidade = document.getElementById("form-cidade").value;
                 const bairro = document.getElementById("form-bairro").value;
                 const area = parseInt(document.getElementById("form-area").value) || 0;
@@ -2178,7 +2293,7 @@
                 const fotos = [];
                 for (const photo of currentFormPhotos) fotos.push(await uploadPhoto(photo));
                 
-                const prop = {id:savedId, titulo, finalidade, tipo, preco, ordem, cidade, bairro, area, quartos, suites, banheiros, vagas, descricao, fotos, videoUrl, tarjaTipo, tarjaTexto, tarjaTamanho, tarjaCor};
+                const prop = {id:savedId, titulo, finalidade, tipo, preco, ordem, oculto, cidade, bairro, area, quartos, suites, banheiros, vagas, descricao, fotos, videoUrl, tarjaTipo, tarjaTexto, tarjaTamanho, tarjaCor};
                 const { error } = await banco.from('imoveis').upsert({id:savedId,dados:prop}, {onConflict:'id'});
                 if (error) throw error;
                 
@@ -2229,6 +2344,7 @@
             const tarjaTexto = document.getElementById("form-tarja-texto") ? document.getElementById("form-tarja-texto").value : "";
             const tarjaTamanho = document.getElementById("form-tarja-tamanho") ? parseInt(document.getElementById("form-tarja-tamanho").value) || 100 : 100;
             const tarjaCor = document.getElementById("form-tarja-cor") ? document.getElementById("form-tarja-cor").value : "red";
+            const isOculto = document.getElementById("form-oculto") && document.getElementById("form-oculto").value === "true";
 
             let mainPhoto = currentFormPhotos.length > 0 ? currentFormPhotos[0] : "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80";
             let photoCount = currentFormPhotos.length;
@@ -2240,6 +2356,7 @@
                 '<span class="bg-gold-500 text-navy-900 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded">Venda</span>';
 
             previewCard.innerHTML = `
+                ${isOculto ? '<div class="bg-gray-800 text-amber-300 text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 flex items-center justify-center gap-1.5"><i class="fa-solid fa-eye-slash"></i> Anúncio Oculto (Não aparece no site)</div>' : ''}
                 <div class="relative overflow-hidden h-44 bg-gray-200">
                     <img src="${mainPhoto}" alt="Prévia" class="w-full h-full object-cover">
                     ${getTarjaOverlayHTML({ tarjaTipo, tarjaTexto, tarjaTamanho, tarjaCor }, 'preview')}
